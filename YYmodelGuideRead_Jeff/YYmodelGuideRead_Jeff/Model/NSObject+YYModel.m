@@ -600,7 +600,7 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
                 if (mappedToKey.length == 0) return;
                 
                 //一般的直接添加到_mappedToKey即可。   P->name
-                //propertyMeta->_name = name but,propertyMeta->_mappedToKey = "n"
+                //propertyMeta->_name = name but propertyMeta->_mappedToKey = "n"
                 propertyMeta->_mappedToKey = mappedToKey;
                 
                 NSArray *keyPath = [mappedToKey componentsSeparatedByString:@"."];
@@ -613,7 +613,7 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
                 // TODO: [Jeff-JIE][2017-02-14][TODO thing]这块不理解
                 propertyMeta->_next = mapper[mappedToKey] ?: nil;
                 //NSLog(@"propertyMeta->_next %@",propertyMeta->_next);
-                mapper[mappedToKey] = propertyMeta;
+                mapper[mappedToKey] = propertyMeta;     //把mapper[name]的 propertyM 赋值给 mapper[n]
                 
             } else if ([mappedToKey isKindOfClass:[NSArray class]]) {
                 
