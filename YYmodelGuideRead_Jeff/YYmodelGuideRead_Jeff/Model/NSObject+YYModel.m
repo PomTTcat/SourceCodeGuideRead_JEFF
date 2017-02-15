@@ -457,21 +457,26 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
 }
 @end
 
-
+/*
 /// A class info in object model.
-/// map有多种形式，有1对1map，1对多 map，1对 keypath map。所有的 map。
+ _keyPathPropertyMetas 和 _multiKeysPropertyMetas仅仅来自自定义映射决定。
+*/
 @interface _YYModelMeta : NSObject {
     @package
     YYClassInfo *_classInfo;
     /// Key:mapped key and key path, Value:_YYModelPropertyInfo.
-    NSDictionary *_mapper;      //author = "<_YYModelPropertyMeta: 0x1700f0d00>"; 属性对应属性 info
-    /// Array<_YYModelPropertyMeta>, all property meta of this model.
-    NSArray *_allPropertyMetas;             //总的来说用处不大。
-    /// Array<_YYModelPropertyMeta>, property meta which is mapped to a key path.
+    NSDictionary *_mapper;
+    /// Array<_YYModelPropertyMeta>, all property meta of this model.               所有的属性映射
+    
+    NSArray *_allPropertyMetas;
+    /// Array<_YYModelPropertyMeta>, property meta which is mapped to a key path.   所有的属性元信息
+    
     NSArray *_keyPathPropertyMetas;
-    /// Array<_YYModelPropertyMeta>, property meta which is mapped to multi keys.
+    /// Array<_YYModelPropertyMeta>, property meta which is mapped to multi keys.   keypath映射
+    
     NSArray *_multiKeysPropertyMetas;
-    /// The number of mapped key (and key path), same to _mapper.count.
+    /// The number of mapped key (and key path), same to _mapper.count.             一对多映射
+    
     NSUInteger _keyMappedCount;             //属性数量
     /// Model class type.
     YYEncodingNSType _nsType;
@@ -536,7 +541,7 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
         }
     }
     
-    // Create all property metas.
+    // Create all property metas.       注意allPropertyMetas是字典。
     NSMutableDictionary *allPropertyMetas = [NSMutableDictionary new];
     YYClassInfo *curClassInfo = classInfo;
     
@@ -557,10 +562,10 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
             _YYModelPropertyMeta *meta = [_YYModelPropertyMeta metaWithClassInfo:classInfo
                                                                     propertyInfo:propertyInfo
                                                                          generic:genericMapper[propertyInfo.name]];
-            //属性 meta 存在，有 name,set,get 则进行最后的赋值。  已经有这个属性了，也不再进行赋值。
+            // meta必须存在，meta必须有name,setter,getter
             if (!meta || !meta->_name) continue;
             if (!meta->_getter || !meta->_setter) continue;
-            if (allPropertyMetas[meta->_name]) continue;    //略怪。
+            if (allPropertyMetas[meta->_name]) continue;
             
             //属性对应PropertyMeta
             allPropertyMetas[meta->_name] = meta;
@@ -590,21 +595,31 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
             if (!propertyMeta) return;
             [allPropertyMetas removeObjectForKey:propertyName];//allPropertyMetas为移除了自定 map 的数组
             
+            
             if ([mappedToKey isKindOfClass:[NSString class]]) {
                 if (mappedToKey.length == 0) return;
                 
+                //一般的直接添加到_mappedToKey即可。   P->name
+                //propertyMeta->_name = name but,propertyMeta->_mappedToKey = "n"
                 propertyMeta->_mappedToKey = mappedToKey;
+                
                 NSArray *keyPath = [mappedToKey componentsSeparatedByString:@"."];
+                //如果 count大于1，以数组的形式添加到keyPath。 并添加到总keypath数组
                 if (keyPath.count > 1) {
                     propertyMeta->_mappedToKeyPath = keyPath;
                     [keyPathPropertyMetas addObject:propertyMeta];
                 }
+                
+                // TODO: [Jeff-JIE][2017-02-14][TODO thing]这块不理解
                 propertyMeta->_next = mapper[mappedToKey] ?: nil;
+                //NSLog(@"propertyMeta->_next %@",propertyMeta->_next);
                 mapper[mappedToKey] = propertyMeta;
                 
             } else if ([mappedToKey isKindOfClass:[NSArray class]]) {
                 
                 NSMutableArray *mappedToKeyArray = [NSMutableArray new];
+                
+                //遍历所有的数组
                 for (NSString *oneKey in ((NSArray *)mappedToKey)) {
                     if (![oneKey isKindOfClass:[NSString class]]) continue;
                     if (oneKey.length == 0) continue;
@@ -632,7 +647,7 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
         }];
     }
     
-    //创建映射      allPropertyMetas此时是移除掉自定映射的数组
+    //创建常规映射mapper      allPropertyMetas此时是移除掉自定映射的数组
     [allPropertyMetas enumerateKeysAndObjectsUsingBlock:^(NSString *name, _YYModelPropertyMeta *propertyMeta, BOOL *stop) {
 //        NSLog(@"");
         propertyMeta->_mappedToKey = name;
@@ -1185,7 +1200,6 @@ static void ModelSetWithDictionaryFunction(const void *_key, const void *_value,
     //上面的代码每次都需要重新读取一遍
     
     //通过获取 jsonDict 的key，获取对应的propertyMeta， 确认有propertyMeta->setter方法。
-//    NSLog(@"name = %@",propertyMeta->_cls);
     while (propertyMeta) {
         if (propertyMeta->_setter) {
 //            NSLog(@"_setter = %@ ",NSStringFromSelector(propertyMeta->_setter));
@@ -1556,7 +1570,6 @@ static NSString *ModelDescription(NSObject *model) {
     Class cls = [self class];                                           //获取 class
     _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:cls];         //依据 实例对象所属类 生成 meta。  meta 是一个含有大量 cls 信息的对象。
     
-    // TODO: [Jeff-JIE][2017-02-14][TODO thing] 这里不懂
     if (modelMeta->_hasCustomClassFromDictionary) {
         cls = [cls modelCustomClassForDictionary:dictionary] ?: cls;    //是否是自定义类型？
     }
@@ -1578,7 +1591,7 @@ static NSString *ModelDescription(NSObject *model) {
     if (!dic || dic == (id)kCFNull) return NO;
     if (![dic isKindOfClass:[NSDictionary class]]) return NO;
     
-    _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:object_getClass(self)];//从 self 那里获得之前生成的_YYModelMeta。
+    _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:object_getClass(self)];//依据 self 获得之前生成的_YYModelMeta。
     if (modelMeta->_keyMappedCount == 0) return NO;
     
     //该方法发生在字典转模型之前。 最后对网络来的字典做一次处理。

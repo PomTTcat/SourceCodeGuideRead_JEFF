@@ -121,7 +121,7 @@ YYEncodingType YYEncodingGetType(const char *typeEncoding) {
     _sel = method_getName(method);
     _imp = method_getImplementation(method);
     
-//    "setName:" -> setName: 这里都是一些字符串变 nsstring
+    //"setName:" -> setName: 这里都是一些字符串变
     const char *name = sel_getName(_sel);
     if (name) {
         _name = [NSString stringWithUTF8String:name];
@@ -133,7 +133,7 @@ YYEncodingType YYEncodingGetType(const char *typeEncoding) {
     char *returnType = method_copyReturnType(method);
     if (returnType) {
         _returnTypeEncoding = [NSString stringWithUTF8String:returnType];
-        free(returnType);       //???????
+        free(returnType);
     }
     
     //获取方法参数
@@ -170,9 +170,13 @@ YYEncodingType YYEncodingGetType(const char *typeEncoding) {
     
     YYEncodingType type = 0;    //type随着遍历，会
     unsigned int attrCount;
-    //attrs包含:属性的class， (copy,strong,etc)  atomic&noatomic 实例变量名    :如果是 assign，就会少一个属性
-    //T:NSString    C:copy  N:noatomic  V:_ivarName
     objc_property_attribute_t *attrs = property_copyAttributeList(property, &attrCount);
+    /*
+     attrs包含:属性的class， (copy,strong,etc)  atomic&noatomic 实例变量名  :如果是 assign，就会少一个属性
+     @property (nonatomic, copy) NSString *name;        的attrs如下
+     T:NSString    C:copy  N:noatomic  V:_ivarName
+     这个方法执行完毕后可以很清晰地获取YYEncodingType
+     */
     for (unsigned int i = 0; i < attrCount; i++) {
 //        NSLog(@"attrs %c",attrs[i].name[0]);
         switch (attrs[i].name[0]) {
@@ -282,9 +286,10 @@ YYEncodingType YYEncodingGetType(const char *typeEncoding) {
         _methodInfos = methodInfos;
         for (unsigned int i = 0; i < methodCount; i++) {
             YYClassMethodInfo *info = [[YYClassMethodInfo alloc] initWithMethod:methods[i]];
-            if (info.name) methodInfos[info.name] = info;   //如果info.name存在，info.name为key， info为value。 最后为YYClassInfo的全局字典。
-            
-//            NSLog(@"name = %@ _argumentTypeEncodings = %@",info.name,info.argumentTypeEncodings);
+            if (info.name) methodInfos[info.name] = info;
+            //如果info.name存在，info.name为key， info为value。 最后为YYClassInfo的全局字典。
+
+            //NSLog(@"name = %@ _argumentTypeEncodings = %@",info.name,info.argumentTypeEncodings);
         }
         free(methods);
     }
@@ -355,9 +360,12 @@ YYEncodingType YYEncodingGetType(const char *typeEncoding) {
         info = [[YYClassInfo alloc] initWithClass:cls];
         if (info) {
             dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER);
-//            void CFDictionarySetValue(CFMutableDictionaryRef theDict, const void *key, const void *value);
-            CFDictionarySetValue(info.isMeta ? metaCache : classCache, (__bridge const void *)(cls), (__bridge const void *)(info));        //如果确认存在，那么把YYClassInfo存储到 cache 里面。
-                                //如果是isMeta，存储到metaCache。如果isMeta = NO，存储到classCache里。
+            
+            //void CFDictionarySetValue(CFMutableDictionaryRef theDict, const void *key, const void *value);
+            
+            //根据isMeta这个标志位，最后存储到对应的 cache 里面。
+            
+            CFDictionarySetValue(info.isMeta ? metaCache : classCache, (__bridge const void *)(cls), (__bridge const void *)(info));
             dispatch_semaphore_signal(lock);
         }
     }

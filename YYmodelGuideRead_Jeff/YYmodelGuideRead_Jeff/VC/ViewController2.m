@@ -29,8 +29,13 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blueColor];
 
+    
+    //test Part
     //--------------------------------------
+    NSData *dataTest = [self dataWithPath:@"content"];
+    User *userTest = [User modelWithJSON:dataTest];
 
+    
     
     
     //--------------------------------------
@@ -52,8 +57,6 @@
     NSData *dataPerson = [self dataWithPath:@"person"];
     Person *person = [Person modelWithJSON:dataPerson];
     [person modelDescription];
-    
-    
     
 //    ((void (*)(id, SEL, id))(void *) objc_msgSend)(self,@selector(nameHa:),@"xixix");
 }
