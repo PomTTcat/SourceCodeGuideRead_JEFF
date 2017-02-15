@@ -1,14 +1,13 @@
 //
 //  AppDelegate.m
-//  yymodelTest
+//  YYmodelGuideRead_Jeff
 //
-//  Created by JIE on 2017/2/11.
+//  Created by JIE on 2017/2/15.
 //  Copyright © 2017年 AppleYJ. All rights reserved.
 //
 
 #import "AppDelegate.h"
 #import "ViewController.h"
-
 
 @interface AppDelegate ()
 
@@ -18,9 +17,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
+    
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:[ViewController new]];
     
     self.window.rootViewController = nav;

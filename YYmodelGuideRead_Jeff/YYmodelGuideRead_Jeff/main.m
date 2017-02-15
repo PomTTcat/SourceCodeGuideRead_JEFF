@@ -1,8 +1,8 @@
 //
 //  main.m
-//  yymodelTest
+//  YYmodelGuideRead_Jeff
 //
-//  Created by JIE on 2017/2/11.
+//  Created by JIE on 2017/2/15.
 //  Copyright © 2017年 AppleYJ. All rights reserved.
 //
 
