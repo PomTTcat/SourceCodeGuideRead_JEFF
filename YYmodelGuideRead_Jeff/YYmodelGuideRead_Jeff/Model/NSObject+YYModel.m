@@ -1176,7 +1176,7 @@ typedef struct {
  @param _context _context.modelMeta and _context.model should not be nil.
  */
 static void ModelSetWithDictionaryFunction(const void *_key, const void *_value, void *_context) {
-    NSLog(@"---key %@ value %@",_key,_value);
+//    NSLog(@"---key %@ value %@",_key,_value);
     ModelSetContext *context = _context;
     __unsafe_unretained _YYModelMeta *meta = (__bridge _YYModelMeta *)(context->modelMeta);
     __unsafe_unretained _YYModelPropertyMeta *propertyMeta = [meta->_mapper objectForKey:(__bridge id)(_key)];
@@ -1624,7 +1624,7 @@ static NSString *ModelDescription(NSObject *model) {
                              &context);
     }
     
-    NSLog(@"%@",self);
+//    NSLog(@"%@",self);
     if (modelMeta->_hasCustomTransformFromDictionary) {
         return [((id<YYModel>)self) modelCustomTransformFromDictionary:dic];
     }
