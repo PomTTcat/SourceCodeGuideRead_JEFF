@@ -1,0 +1,39 @@
+{
+    "n":"Harry Pottery",
+    "p": 256,
+    "ext" : {
+        "desc" : "A book written by J.K.Rowing."
+    },
+    "id" : 100010,
+    
+    "uid":123456,
+    "bookname":"Harry",
+    "created":"1965-07-31T00:00:00+0000",
+    "timestamp" : 1445534567,
+    "whiteListTest":"whiteBoy",
+    "blackListTest":"blackBoy",
+    "author":{
+        "birthday":"1965-07-31T08:00:00+0800",
+        "name":"J.K.Rowling"
+    },
+    "runtimeClass" : "YYUserSon",
+    "userSonString" : "hi girl",
+    "goChange" : "YES",
+    
+    "authors":[
+               {
+               "birthday":"1991-07-31T08:00:00+0800",
+               "name":"G.Y.J.jeff"
+               },
+               {
+               "birthday":"1990-07-31T08:00:00+0800",
+               "name":"Z.Q.Y,jhon"
+               }
+               ]
+    
+}
+
+
+
+
+
