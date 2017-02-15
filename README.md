@@ -242,12 +242,8 @@ I add some notes to YYModel
     NSDictionary *dicT = [NSDictionary modelDictionaryWithClass:[YYAuthor class] json:dataDict];
     NSLog(@"dicT = %@",dicT);
 ```
-如果对使用方法还略有不懂，可以下载我的 github 上的工程。里面都是经过测试的。
 
 
-下面的源码是我在读 YYModel 时添加的大量备注，和 YYModel 的简单使用介绍。
-源码地址 :
-https://github.com/PomTTcat/YYModelGuideRead_JEFF
 
 这篇文章没讲 model->json，因为那个太简单了。平时使用重点是json->model。
 最后的最后，哪里不明白可以一起交流技术！🙂
