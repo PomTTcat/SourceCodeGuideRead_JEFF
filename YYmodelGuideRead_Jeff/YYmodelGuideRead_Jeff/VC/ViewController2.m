@@ -45,8 +45,9 @@
     NSLog(@"arrT = %@",arrT);
     
     NSData *dataDict = [self dataWithPath:@"dicTest"];
-    NSDictionary *dicT = [NSDictionary modelDictionaryWithClass:[User class] json:dataDict];
+    NSDictionary *dicT = [NSDictionary modelDictionaryWithClass:[YYAuthor class] json:dataDict];
     NSLog(@"dicT = %@",dicT);
+    //dicT[@"user3"]的value中（ key = user3, value = nil ）
     
     NSData *dataPerson = [self dataWithPath:@"person"];
     Person *person = [Person modelWithJSON:dataPerson];

@@ -1,98 +1,10 @@
-{"user1":{
-    "n":"Harry Pottery",
-    "p": 256,
-    "ext" : {
-        "desc" : "A book written by J.K.Rowing."
-    },
-    "id" : 100010,
-    "uid":123456,
-    "bookname":"Harry",
-    "created":"1965-07-31T00:00:00+0000",
-    "timestamp" : 1445534567,
-    "whiteListTest":"whiteBoy",
-    "blackListTest":"blackBoy",
-    "author":{
-        "birthday":"1965-07-31T08:00:00+0800",
-        "name":"J.K.Rowling"
-    },
-    "runtimeClass" : "YYUserSon",
-    "userSonString" : "hi girl",
-    "goChange" : "YES",
-    
-    "authors":[
-               {
-               "birthday":"1991-07-31T08:00:00+0800",
-               "name":"G.Y.J.jeff"
-               },
-               {
-               "birthday":"1990-07-31T08:00:00+0800",
-               "name":"Z.Q.Y,jhon"
-               }
-               ]
-    
-}, "user2": {
-    "n":"Harry Pottery2",
-    "p": 2562,
-    "ext" : {
-        "desc" : "A book written by J.K.Rowing.2"
-    },
-    "id" : 1000102,
-    "uid":1234562,
-    "bookname":"Harry2",
-    "created":"1965-07-31T00:00:00+0000",
-    "timestamp" : 14455345672,
-    "whiteListTest":"whiteBoy2",
-    "blackListTest":"blackBoy2",
-    "author":{
-        "birthday":"1965-07-31T08:00:00+0800",
-        "name":"J.K.Rowling2"
-    },
-    "runtimeClass" : "YYUserSon2",
-    "userSonString" : "hi girl2",
-    "goChange" : "YES",
-    
-    "authors":[
-               {
-               "birthday":"1991-07-31T08:00:00+0800",
-               "name":"G.Y.J.jeff"
-               },
-               {
-               "birthday":"1990-07-31T08:00:00+0800",
-               "name":"Z.Q.Y,jhon"
-               }
-               ]
-    
+{"user1": {
+    "birthday":"1990-07-31T08:00:00+0800",
+    "name":"1Z.Q.Y,jhon"
+},"user2":{
+    "birthday":"1990-07-31T08:00:00+0800",
+    "name":"2Z.Q.Y,jhon"
 },"user3":{"user4":{
-    "n":"Harry Pottery3",
-    "p": 2562,
-    "ext" : {
-        "desc" : "A book written by J.K.Rowing.3"
-    },
-    "id" : 1000102,
-    "uid":1234562,
-    "bookname":"Harry3",
-    "created":"1965-07-31T00:00:00+0000",
-    "timestamp" : 14455345672,
-    "whiteListTest":"whiteBoy2",
-    "blackListTest":"blackBoy2",
-    "author":{
-        "birthday":"1965-07-31T08:00:00+0800",
-        "name":"J.K.Rowling2"
-    },
-    "runtimeClass" : "YYUserSon2",
-    "userSonString" : "hi girl2",
-    "goChange" : "YES",
-    
-    "authors":[
-               {
-               "birthday":"1991-07-31T08:00:00+0800",
-               "name":"G.Y.J.jeff"
-               },
-               {
-               "birthday":"1990-07-31T08:00:00+0800",
-               "name":"Z.Q.Y,jhon"
-               }
-               ]
-    
+    "birthday":"1990-07-31T08:00:00+0800",
+    "name":"3Z.Q.Y,jhon"
 }}}
-
