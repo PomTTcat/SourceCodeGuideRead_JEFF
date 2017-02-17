@@ -1244,7 +1244,18 @@ static void ModelSetWithPropertyMetaArrayFunction(const void *_propertyMeta, voi
  @param model Model, can be nil.
  @return JSON object, nil if an error occurs.
  */
-//---------------------
+//--------------------- 返回的都是 OC 对象。
+/*
+ NSString，NSNumber，空				->	直接返回
+ NSDictionary，NSSet，NSArray			->	会去遍历并返回转换结束的对象。
+ NSURL，NSAttributedString，NSDate	->	返回其中的字符串
+ NSData 								->  返回 nil
+ 
+ 自定义对象，遍历该类的元数据。
+ _isCNumber							->	根据type，向对象发送该属性getter方法
+ foundation数据类型，肯定有 getter 方法 	->  直接获取值
+ id,sel,class
+ */
 static id ModelToJSONObjectRecursive(NSObject *model) {
     //如果参数为：空 NSString NSNumber。。。等 OC 类型。则返回即可。
     if (!model || model == (id)kCFNull) return model;
@@ -1338,6 +1349,7 @@ static id ModelToJSONObjectRecursive(NSObject *model) {
                 default: break;
             }
         }
+        
         if (!value) return;
         
         if (propertyMeta->_mappedToKeyPath) {
@@ -1360,7 +1372,7 @@ static id ModelToJSONObjectRecursive(NSObject *model) {
                     }
                 } else {
                     subDic = [NSMutableDictionary new];
-                    superDic[key] = subDic;
+                    superDic[key] = subDic;     //初始化该 key.
                 }
                 superDic = subDic;
                 subDic = nil;
