@@ -1891,19 +1891,20 @@ static NSString *ModelDescription(NSObject *model) {
 
 - (BOOL)modelIsEqual:(id)model {
     if (self == model) return YES;
-    if (![model isMemberOfClass:self.class]) return NO;
+    if (![model isMemberOfClass:self.class]) return NO;     //自检
     _YYModelMeta *modelMeta = [_YYModelMeta metaWithClass:self.class];
     if (modelMeta->_nsType) return [self isEqual:model];
-    if ([self hash] != [model hash]) return NO;
+    if ([self hash] != [model hash]) return NO;             //对比 hash 值
     
     for (_YYModelPropertyMeta *propertyMeta in modelMeta->_allPropertyMetas) {
         if (!propertyMeta->_isKVCCompatible) continue;
-        id this = [self valueForKey:NSStringFromSelector(propertyMeta->_getter)];
-        id that = [model valueForKey:NSStringFromSelector(propertyMeta->_getter)];
+        id this = [self valueForKey:NSStringFromSelector(propertyMeta->_getter)];       //用 getter 获取自己属性
+        id that = [model valueForKey:NSStringFromSelector(propertyMeta->_getter)];      //用 getter 获取需要对比的对象属性
         if (this == that) continue;
         if (this == nil || that == nil) return NO;
         if (![this isEqual:that]) return NO;
     }
+    //如果所有属性对比都通过，类型一致，hash 一致。则相同。
     return YES;
 }
 
