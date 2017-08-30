@@ -120,7 +120,7 @@ class _LasyConnection(object):
             logging.info('close connection <%s>...' % hex(id(connection)))
             connection.close()
 
-
+# 每个Thread对它都可以读写student属性，但互不影响。你可以把local_school看成全局变量，但每个属性如local_school.student都是线程的局部变量，可以任意读写而互不干扰，也不用管理锁的问题，ThreadLocal内部会处理。
 class _DbCtx(threading.local):
     '''
     Thread local object that holds connection info.
@@ -258,6 +258,7 @@ class _TransactionCtx(object):
             _db_ctx.init()
             self.should_close_conn = True
         _db_ctx.transactions = _db_ctx.transactions + 1
+        logging.info('transactions + 1 %d',_db_ctx.transactions)
         logging.info('begin transaction...' if _db_ctx.transactions ==
                                                1 else 'join current transaction...')
         return self
@@ -265,6 +266,7 @@ class _TransactionCtx(object):
     def __exit__(self, exctype, excvalue, traceback):
         global _db_ctx
         _db_ctx.transactions = _db_ctx.transactions - 1
+        logging.info('transactions - 1 %d', _db_ctx.transactions)
         try:
             if _db_ctx.transactions == 0:
                 # 没有问题则提交，有问题则回滚。
@@ -468,7 +470,9 @@ def _update(sql, *args):
     logging.info('SQL: %s, ARGS: %s' % (sql, args))
     try:
         cursor = _db_ctx.connection.cursor()
+        logging.info('open cursor')
         cursor.execute(sql, args)
+        logging.info('execute SQL')
         r = cursor.rowcount
         if _db_ctx.transactions == 0:
             # no transaction enviroment:
@@ -478,6 +482,7 @@ def _update(sql, *args):
     finally:
         if cursor:
             cursor.close()
+            logging.info('close cursor')
 
 
 def insert(table, **kw):
