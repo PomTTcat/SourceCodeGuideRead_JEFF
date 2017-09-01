@@ -200,6 +200,7 @@ class _ConnectionCtx(object):
     def __enter__(self):
         global _db_ctx
         self.should_cleanup = False
+        # 重点在这儿，保证了一条线程，只会init一次，connect只会close一次。
         if not _db_ctx.is_init():
             _db_ctx.init()
             self.should_cleanup = True
@@ -221,7 +222,7 @@ def connection():
     return _ConnectionCtx()
 
 
-# 保证改方法执行前，已经有了连接。
+# 保证改方法执行前打开关闭connection。方法执行完毕，关闭connection
 # iOS中用的上吗？是不是是后台特有的一些编程思想。
 def with_connection(func):
     '''
@@ -296,7 +297,8 @@ class _TransactionCtx(object):
         _db_ctx.connection.rollback()
         logging.info('rollback ok.')
 
-
+# 其实该事务主要做的事是，不让线程嵌套发生。不允许线程再执行事务。
+# 做了开启线程的工作。
 def transaction():
     '''
     Create a transaction object so can use with statement:
@@ -533,12 +535,26 @@ def update(sql, *args):
     '''
     return _update(sql, *args)
 
+def update_profile(id, name, rollback):
+	u = dict(id=id, name=name, email='%s@test.org' % name, passwd=name, last_modified=time.time())
+	insert('user', **u)
+	r = update('update user set passwd=? where id=?', name.upper(), id)
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
     create_engine(user='root',password='newpass',database='test')
     update('drop table if exists user')
     update('create table user (id int primary key, name text, email text, passwd text, last_modified real)')
-    import doctest
+    # testDic = {'h1': 'hhh1', 'h2': 'hhh2'}
+    # insert('hahahahha', **testDic)
 
-    doctest.testmod()
+    # 因为
+    with transaction():
+        update_profile(900301, 'Python', False)
+        update_profile(900302, 'Python', False)
+        update_profile(900303, 'Python', False)
+
+
+    # import doctest
+    #
+    # doctest.testmod()

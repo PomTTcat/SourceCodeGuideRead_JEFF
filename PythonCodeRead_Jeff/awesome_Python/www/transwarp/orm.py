@@ -17,6 +17,7 @@ class Field(object):
     _count = 0
 
     def __init__(self, **kw):
+        # get的时候后面都有默认值
         self.name = kw.get('name', None)
         self._default = kw.get('default', None)
         self.primary_key = kw.get('primary_key', False)
@@ -30,6 +31,9 @@ class Field(object):
     @property
     def default(self):
         d = self._default
+        # print 'look look %s' % d
+        # 可见default是一个特殊的值。 需要这么设计。
+        # default 可能是这个值，可能是字符串。各种数据类型都在~
         return d() if callable(d) else d
 
     def __str__(self):
@@ -323,6 +327,11 @@ class Model(dict):
         db.insert('%s' % self.__table__, **params)
         return self
 
+def testIn0901():
+    testF = Field(name='haha', ddl='fsfsfsf', primary_key=123323, updatable=False, default='what D')
+    print testF.name
+    print testF.default
+    print testF.__str__()
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
@@ -330,6 +339,8 @@ if __name__ == '__main__':
     db.create_engine(user='root', password='newpass', database='test')
     db.update('drop table if exists user')
     db.update('create table user (id int primary key, name text, email text, passwd text, last_modified real)')
+
+
     import doctest
 
     doctest.testmod()
