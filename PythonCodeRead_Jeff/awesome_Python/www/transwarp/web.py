@@ -245,7 +245,7 @@ _RESPONSE_HEADERS = (
 )
 
 # 1.把_RESPONSE_HEADERS里面的字母变成全部大写
-# 2.以大写为key，小写为value
+# 2.以全部大写为key，小写为value
 _RESPONSE_HEADER_DICT = dict(zip(map(lambda x: x.upper(), _RESPONSE_HEADERS), _RESPONSE_HEADERS))
 
 _HEADER_X_POWERED_BY = ('X-Powered-By', 'transwarp/1.0')
@@ -468,7 +468,7 @@ def _quote(s, encoding='utf-8'):
     return urllib.quote(s)
 
 
-# 用utf-8解码
+# 1.urllib解码 2.默认用utf-8解码 -> 返回Unicode
 def _unquote(s, encoding='utf-8'):
     '''
     Url unquote as unicode.
@@ -476,7 +476,6 @@ def _unquote(s, encoding='utf-8'):
     >>> _unquote('http%3A//example/test%3Fa%3D1+')
     u'http://example/test?a=1+'
     '''
-    # 先用urllib解码，然后用utf-8解码。
     return urllib.unquote(s).decode(encoding)
 
 
@@ -665,6 +664,8 @@ class Request(object):
                 return MultipartFile(item)
             return _to_unicode(item.value)
 
+        uxxx = self._environ['wsgi.input']
+        # environ['wsgi.input'] = <socket._fileobject object at 0x103d66050>
         fs = cgi.FieldStorage(fp=self._environ['wsgi.input'], environ=self._environ, keep_blank_values=True)
         inputs = dict()
         for key in fs:
@@ -679,6 +680,8 @@ class Request(object):
             self._raw_input = self._parse_input()
         return self._raw_input
 
+    # 直接获取都是去 environ['wsgi.input'] 获取。
+    # environ['wsgi.input'] 请求体内容
     def __getitem__(self, key):
         '''
         Get input parameter value. If the specified key has multiple value, the first one is returned.
@@ -713,6 +716,7 @@ class Request(object):
             return r[0]
         return r
 
+    # 获取post请求中的内容。输入key，返回value。 如果返回是list，只返回第一个value。需要返回list，用下面这个方法。
     def get(self, key, default=None):
         '''
         The same as request[key], but return default value if key is not found.
@@ -752,6 +756,7 @@ class Request(object):
 
     def input(self, **kw):
         '''
+        输入一个字典，返回包括 _get_raw_input 的字典。 不太明白这么做的意义，本身也没有改变 raw_input。
         Get input as dict from request, fill dict using provided default value if key not exist.
 
         i = ctx.request.input(role='guest')
@@ -779,6 +784,7 @@ class Request(object):
             copy[k] = v[0] if isinstance(v, list) else v
         return copy
 
+    # 读取所有内容。 post请求头内容
     def get_body(self):
         '''
         Get raw data from HTTP POST and return as str.
@@ -883,6 +889,7 @@ class Request(object):
         if not hasattr(self, '_headers'):
             hdrs = {}
             for k, v in self._environ.iteritems():
+                # 只需要开头是HTTP_的。
                 if k.startswith('HTTP_'):
                     # convert 'HTTP_ACCEPT_ENCODING' to 'ACCEPT-ENCODING'
                     hdrs[k[5:].replace('_', '-').upper()] = v.decode('utf-8')
@@ -924,6 +931,7 @@ class Request(object):
         u'DEFAULT'
         '''
         return self._get_headers().get(header.upper(), default)
+
 
     def _get_cookies(self):
         if not hasattr(self, '_cookies'):
@@ -990,6 +998,7 @@ class Response(object):
         if hasattr(self, '_cookies'):
             for v in self._cookies.itervalues():
                 L.append(('Set-Cookie', v))
+        # _HEADER_X_POWERED_BY = ('X-Powered-By', 'transwarp/1.0')
         L.append(_HEADER_X_POWERED_BY)
         return L
 
@@ -1278,7 +1287,7 @@ class TemplateEngine(object):
 class Jinja2TemplateEngine(TemplateEngine):
     '''
     Render using jinja2 template engine.
-
+    
     >>> templ_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'test')
     >>> engine = Jinja2TemplateEngine(templ_path)
     >>> engine.add_filter('datetime', lambda dt: dt.strftime('%Y-%m-%d %H:%M:%S'))
@@ -1609,13 +1618,57 @@ class WSGIApplication(object):
 
 if __name__ == '__main__':
     sys.path.append('.')
+    # b = '----WebKitFormBoundaryQQ3J8kPsjFpTmqNz'
+    #
+    # pl = ['--%s' % b, 'Content-Disposition: form-data; name=\\"name\\"\\n', 'Scofield', '--%s' % b,
+    #            'Content-Disposition: form-data; name=\\"name\\"\\n', 'Lincoln', '--%s' % b,
+    #            'Content-Disposition: form-data; name=\\"file\\"; filename=\\"test.txt\\"',
+    #            'Content-Type: text/plain\\n', 'just a test', '--%s' % b,
+    #            'Content-Disposition: form-data; name=\\"id\\"\\n', '4008009001', '--%s--' % b, '']
+    # payload = '\\n'.join(pl)
+    # print  payload
+    #
 
-    _build_regex('/:user/:comments/list')
-    print _build_regex('/path/to/:file')
-    # '^\\/path\\/to\\/(?P<file>[^\\/]+)$'
-    print _build_regex('/:user/:comments/list')
-    # '^\\/(?P<user>[^\\/]+)\\/(?P<comments>[^\\/]+)\\/list$'
-    print _build_regex(':id-:pid/:w')
+    # def target():
+    #     print 'target'
+    #     return 123
+    #
+    #
+    # @interceptor('/')
+    # def f1(next):
+    #     print 'before f1()'
+    #     return next()
+    #
+    #
+    # @interceptor('/test/')
+    # def f2(next):
+    #     print 'before f2()'
+    #     try:
+    #         return next()
+    #     finally:
+    #         print 'after f2()'
+    #
+    #
+    # @interceptor('/')
+    # def f3(next):
+    #     print 'before f3()'
+    #     try:
+    #         return next()
+    #     finally:
+    #         print 'after f3()'
+    #
+    #
+    # chain = _build_interceptor_chain(target, f1, f2, f3)
+    # ctx.request = Dict(path_info='/test/abc')
+    # chain()
+
+    # 'text/html; charset=utf-8'
+    # _build_regex('/:user/:comments/list')
+    # print _build_regex('/path/to/:file')
+    # # '^\\/path\\/to\\/(?P<file>[^\\/]+)$'
+    # print _build_regex('/:user/:comments/list')
+    # # '^\\/(?P<user>[^\\/]+)\\/(?P<comments>[^\\/]+)\\/list$'
+    # print _build_regex(':id-:pid/:w')
 
 
     # print e.status
