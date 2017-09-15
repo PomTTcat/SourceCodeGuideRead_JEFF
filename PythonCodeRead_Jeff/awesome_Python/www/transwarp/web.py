@@ -533,6 +533,7 @@ def post(path):
 
 _re_route = re.compile(r'(\:[a-zA-Z_]\w*)')
 
+
 # 快速返回一个相对于path的正则表达式。符合正则表达式，则通过。
 def _build_regex(path):
     r'''
@@ -563,7 +564,7 @@ def _build_regex(path):
                 elif ch >= 'a' and ch <= 'z':
                     s = s + ch
                 else:
-                    s = s + '\\' + ch # 符号都需要加转义符号
+                    s = s + '\\' + ch  # 符号都需要加转义符号
             re_list.append(s)
         is_var = not is_var
     re_list.append('$')
@@ -932,7 +933,6 @@ class Request(object):
         '''
         return self._get_headers().get(header.upper(), default)
 
-
     def _get_cookies(self):
         if not hasattr(self, '_cookies'):
             cookies = {}
@@ -1285,6 +1285,7 @@ class TemplateEngine(object):
 
 
 class Jinja2TemplateEngine(TemplateEngine):
+    # datetime.datetime 有函数 strftime(pattern)
     '''
     Render using jinja2 template engine.
     
@@ -1307,7 +1308,7 @@ class Jinja2TemplateEngine(TemplateEngine):
     def __call__(self, path, model):
         return self._env.get_template(path).render(**model).encode('utf-8')
 
-
+# 处理异常 比如 404 xxxx 则返回这样的一个html页面。
 def _default_error_handler(e, start_response, is_debug):
     if isinstance(e, HttpError):
         logging.info('HttpError: %s' % e.status)
@@ -1325,6 +1326,7 @@ def _default_error_handler(e, start_response, is_debug):
 def view(path):
     '''
     A view decorator that render a view by dict.
+    功能：view里面是路径。 挂在返回值是dict的 方法 上面。
 
     >>> @view('test/view.html')
     ... def hello():
@@ -1370,7 +1372,7 @@ def _build_pattern_fn(pattern):
         return lambda p: p.endswith(m.group(1))
     raise ValueError('Invalid pattern definition in interceptor.')
 
-
+# 快速生成方法的__interceptor__。
 def interceptor(pattern='/'):
     '''
     An @interceptor decorator.
@@ -1618,6 +1620,7 @@ class WSGIApplication(object):
 
 if __name__ == '__main__':
     sys.path.append('.')
+
     # b = '----WebKitFormBoundaryQQ3J8kPsjFpTmqNz'
     #
     # pl = ['--%s' % b, 'Content-Disposition: form-data; name=\\"name\\"\\n', 'Scofield', '--%s' % b,
