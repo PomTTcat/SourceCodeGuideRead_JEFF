@@ -1427,7 +1427,7 @@ def _build_interceptor_chain(last_fn, *interceptors):
     >>> chain = _build_interceptor_chain(target, f1, f2, f3)
     >>> ctx.request = Dict(path_info='/test/abc')
     >>> chain()
-    before f1()
+    before f1() 
     before f2()
     before f3()
     target
@@ -1632,38 +1632,7 @@ if __name__ == '__main__':
     # print  payload
     #
 
-    # def target():
-    #     print 'target'
-    #     return 123
-    #
-    #
-    # @interceptor('/')
-    # def f1(next):
-    #     print 'before f1()'
-    #     return next()
-    #
-    #
-    # @interceptor('/test/')
-    # def f2(next):
-    #     print 'before f2()'
-    #     try:
-    #         return next()
-    #     finally:
-    #         print 'after f2()'
-    #
-    #
-    # @interceptor('/')
-    # def f3(next):
-    #     print 'before f3()'
-    #     try:
-    #         return next()
-    #     finally:
-    #         print 'after f3()'
-    #
-    #
-    # chain = _build_interceptor_chain(target, f1, f2, f3)
-    # ctx.request = Dict(path_info='/test/abc')
-    # chain()
+    m = _load_module('xml.sax.handler')
 
     # 'text/html; charset=utf-8'
     # _build_regex('/:user/:comments/list')
