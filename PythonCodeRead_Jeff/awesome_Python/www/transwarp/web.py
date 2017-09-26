@@ -1452,7 +1452,7 @@ def _build_interceptor_chain(last_fn, *interceptors):
 
 def _load_module(module_name):
     '''
-    Load module from name as str.
+    Load module from name as str. 用字符串的方式动态加载module
 
     >>> m = _load_module('xml')
     >>> m.__name__
@@ -1506,8 +1506,10 @@ class WSGIApplication(object):
         self._check_not_running()
         self._template_engine = engine
 
+    # 有__web_route__和__web_method__才会被添加到url中。
     def add_module(self, mod):
         self._check_not_running()
+        # 如果传入字符串，则转换为类。如果传入类，则不做处理。
         m = mod if type(mod) == types.ModuleType else _load_module(mod)
         logging.info('Add module: %s' % m.__name__)
         for name in dir(m):
@@ -1515,6 +1517,7 @@ class WSGIApplication(object):
             if callable(fn) and hasattr(fn, '__web_route__') and hasattr(fn, '__web_method__'):
                 self.add_url(fn)
 
+    # 添加路由，静态动态分开。get，path分开。
     def add_url(self, func):
         self._check_not_running()
         route = Route(func)
@@ -1549,6 +1552,7 @@ class WSGIApplication(object):
 
         _application = Dict(document_root=self._document_root)
 
+        # 返回路由匹配的方法。也是分四种。
         def fn_route():
             request_method = ctx.request.request_method
             path_info = ctx.request.path_info
@@ -1620,7 +1624,7 @@ class WSGIApplication(object):
 
 if __name__ == '__main__':
     sys.path.append('.')
-
+    m = _load_module('xml.sax')
     # b = '----WebKitFormBoundaryQQ3J8kPsjFpTmqNz'
     #
     # pl = ['--%s' % b, 'Content-Disposition: form-data; name=\\"name\\"\\n', 'Scofield', '--%s' % b,
