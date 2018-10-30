@@ -50,3 +50,5 @@ create table comments (
 -- admin@example.com / password
 
 insert into users (`id`, `email`, `password`, `admin`, `name`, `created_at`) values ('0010018336417540987fff4508f43fbaed718e263442526000', 'admin@example.com', '5f4dcc3b5aa765d61d8327deb882cf99', 1, 'Administrator', 1402909113.628);
+
+insert into users (`id`, `email`, `password`, `admin`, `name`, `created_at`) values ('0010018336417540987ffd4508f43fbaed718e263442526000', 'Jeff@example.com', '5f4dcc3b5aa765ds1d8327deb882cf99', 0, 'Jeff', 1402909413.628);
