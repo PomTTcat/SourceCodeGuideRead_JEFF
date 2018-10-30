@@ -353,8 +353,6 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
 @implementation _YYModelPropertyMeta
 /*
  属性属于哪个类
- 
- 
  generic        //来自容器类的转换
  */
 + (instancetype)metaWithClassInfo:(YYClassInfo *)classInfo propertyInfo:(YYClassPropertyInfo *)propertyInfo generic:(Class)generic {
@@ -492,6 +490,7 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
 //---------
 - (instancetype)initWithClass:(Class)cls {
     YYClassInfo *classInfo = [YYClassInfo classInfoWithClass:cls];  //依据 cls 获取YYClassInfo
+//    NSLog(@"classInfo = %@",[classInfo modelDescription]);
     if (!classInfo) return nil;
     self = [super init];
     
@@ -529,8 +528,8 @@ static force_inline id YYValueForMultiKeys(__unsafe_unretained NSDictionary *dic
                 if (class_isMetaClass(meta)) {          //如果类是元类
                     tmp[key] = obj;
                     
-                    //如果是字符串，则会字符串转化成类名。如"YYAuthor" 这种meta是NSTaggedPointerString，是字符串类
                 } else if ([obj isKindOfClass:[NSString class]]) {
+                    //如果是字符串，则会字符串转化成类名。如"YYAuthor" 这种meta是NSTaggedPointerString，是字符串类
                     Class cls = NSClassFromString(obj);
                     if (cls) {
                         tmp[key] = cls;

@@ -35,28 +35,26 @@
     NSData *dataTest = [self dataWithPath:@"content"];
     User *userTest = [User modelWithJSON:dataTest];
 
-    
-    
-    
+    NSLog(@"i = %@",[userTest modelDescription]);
     //--------------------------------------
-    //json -> model     model ->(nsobject , nsstring ,date)
-    NSData *data = [self dataWithPath:@"content"];
-    User *user = [User modelWithJSON:data];
-    NSDictionary *jsonUser = [user modelToJSONObject];
-    NSLog(@"jsonUser = %@",jsonUser);
-    
-    NSData *dataArr = [self dataWithPath:@"arrayTest"];
-    NSArray *arrT = [NSArray modelArrayWithClass:[YYAuthor class] json:dataArr];
-    NSLog(@"arrT = %@",arrT);
-    
-    NSData *dataDict = [self dataWithPath:@"dicTest"];
-    NSDictionary *dicT = [NSDictionary modelDictionaryWithClass:[YYAuthor class] json:dataDict];
-    NSLog(@"dicT = %@",dicT);
-    //dicT[@"user3"]的value中（ key = user3, value = nil ）
-    
-    NSData *dataPerson = [self dataWithPath:@"person"];
-    Person *person = [Person modelWithJSON:dataPerson];
-    [person modelDescription];
+//    //json -> model     model ->(nsobject , nsstring ,date)
+//    NSData *data = [self dataWithPath:@"content"];
+//    User *user = [User modelWithJSON:data];
+//    NSDictionary *jsonUser = [user modelToJSONObject];
+//    NSLog(@"jsonUser = %@",jsonUser);
+//
+//    NSData *dataArr = [self dataWithPath:@"arrayTest"];
+//    NSArray *arrT = [NSArray modelArrayWithClass:[YYAuthor class] json:dataArr];
+//    NSLog(@"arrT = %@",arrT);
+//
+//    NSData *dataDict = [self dataWithPath:@"dicTest"];
+//    NSDictionary *dicT = [NSDictionary modelDictionaryWithClass:[YYAuthor class] json:dataDict];
+//    NSLog(@"dicT = %@",dicT);
+//    //dicT[@"user3"]的value中（ key = user3, value = nil ）
+//
+//    NSData *dataPerson = [self dataWithPath:@"person"];
+//    Person *person = [Person modelWithJSON:dataPerson];
+//    [person modelDescription];
     
 //    ((void (*)(id, SEL, id))(void *) objc_msgSend)(self,@selector(nameHa:),@"xixix");
 }
