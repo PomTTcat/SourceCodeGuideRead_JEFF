@@ -21,6 +21,7 @@
 @property (strong, nonatomic, nonnull) NSMutableDictionary<NSURL *, SDWebImageDownloaderOperation *> *URLOperations;
 @property (strong, nonatomic, nullable) SDHTTPHeadersMutableDictionary *HTTPHeaders;
 // This queue is used to serialize the handling of the network responses of all the download operation in a single queue
+// URLOperations相关操作是串行的。
 @property (strong, nonatomic, nullable) dispatch_queue_t barrierQueue;
 
 // The session in which data tasks will run
