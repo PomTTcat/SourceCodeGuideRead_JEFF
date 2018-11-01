@@ -185,6 +185,8 @@
         else {
             request.allHTTPHeaderFields = sself.HTTPHeaders;
         }
+        
+        // 传递session是很重要的。
         SDWebImageDownloaderOperation *operation = [[sself.operationClass alloc] initWithRequest:request inSession:sself.session options:options];
         operation.shouldDecompressImages = sself.shouldDecompressImages;
         
@@ -203,6 +205,7 @@
         [sself.downloadQueue addOperation:operation];
         if (sself.executionOrder == SDWebImageDownloaderLIFOExecutionOrder) {
             // Emulate LIFO execution order by systematically adding new operations as last operation's dependency
+            // 支持后进先出，先进的反而加依赖到最新添加的。如果之前的operation还没执行，就会先执行现在加的，再执行之前的。
             [sself.lastAddedOperation addDependency:operation];
             sself.lastAddedOperation = operation;
         }
@@ -214,6 +217,8 @@
 - (void)cancel:(nullable SDWebImageDownloadToken *)token {
     dispatch_barrier_async(self.barrierQueue, ^{
         SDWebImageDownloaderOperation *operation = self.URLOperations[token.url];
+        
+        // 清空操作token，如果确实没有其他block了。说明已经取消了。
         BOOL canceled = [operation cancel:token.downloadOperationCancelToken];
         if (canceled) {
             [self.URLOperations removeObjectForKey:token.url];
@@ -235,14 +240,19 @@
 
     __block SDWebImageDownloadToken *token = nil;
 
+    // 为什么要用barrier？普通的串行队列不行？答案应该是可以的。
     dispatch_barrier_sync(self.barrierQueue, ^{
         SDWebImageDownloaderOperation *operation = self.URLOperations[url];
         if (!operation) {
+            // createCallback() 是用来创建opreation的Block
+            // operation包含了封装了url的urlRequest的。并且已经添加到了downloadQueue里面。
             operation = createCallback();
             self.URLOperations[url] = operation;
-
+            
             __weak SDWebImageDownloaderOperation *woperation = operation;
+            // 执行完毕后做清除操作。
             operation.completionBlock = ^{
+                NSLog(@"completionBlock now in %@",[NSThread currentThread]);
 				dispatch_barrier_sync(self.barrierQueue, ^{
 					SDWebImageDownloaderOperation *soperation = woperation;
 					if (!soperation) return;
@@ -252,6 +262,8 @@
 				});
             };
         }
+        // downloadOperationCancelToken是个字典。key：string value：block函数
+        // key有progress，completed两种
         id downloadOperationCancelToken = [operation addHandlersForProgress:progressBlock completed:completedBlock];
 
         token = [SDWebImageDownloadToken new];
@@ -284,17 +296,20 @@
 }
 
 #pragma mark NSURLSessionDataDelegate
-
+/**  告诉delegate已经接受到服务器的初始应答, 准备接下来的数据任务的操作. */
 - (void)URLSession:(NSURLSession *)session
           dataTask:(NSURLSessionDataTask *)dataTask
 didReceiveResponse:(NSURLResponse *)response
  completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
 
     // Identify the operation that runs this task and pass it the delegate method
+    // 依据task id 返回对应的 Operation
     SDWebImageDownloaderOperation *dataOperation = [self operationWithTask:dataTask];
 
+    // downloader是起一个桥接作用。所有的回调走downloader，downloader再传递给对应的dataOperation。
     [dataOperation URLSession:session dataTask:dataTask didReceiveResponse:response completionHandler:completionHandler];
 }
+
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
 

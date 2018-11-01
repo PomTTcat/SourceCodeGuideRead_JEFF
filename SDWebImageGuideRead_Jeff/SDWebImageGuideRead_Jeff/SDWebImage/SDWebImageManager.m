@@ -124,9 +124,11 @@
         url = nil;
     }
 
+    // weakOperation待会用于block内部
     __block SDWebImageCombinedOperation *operation = [SDWebImageCombinedOperation new];
     __weak SDWebImageCombinedOperation *weakOperation = operation;
 
+    // isFailedUrl 是否下载失败过。
     BOOL isFailedUrl = NO;
     if (url) {
         @synchronized (self.failedURLs) {
@@ -134,6 +136,7 @@
         }
     }
 
+    // 如果下载失败过，又没有在option中选择retry。默认返回空image。
     if (url.absoluteString.length == 0 || (!(options & SDWebImageRetryFailed) && isFailedUrl)) {
         [self callCompletionBlockForOperation:operation completion:completedBlock error:[NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorFileDoesNotExist userInfo:nil] url:url];
         return operation;
@@ -142,6 +145,8 @@
     @synchronized (self.runningOperations) {
         [self.runningOperations addObject:operation];
     }
+    
+    // 可以对url进行一些操作。（官方示例中有去除url中的query-string。）
     NSString *key = [self cacheKeyForURL:url];
 
     operation.cacheOperation = [self.imageCache queryCacheOperationForKey:key done:^(UIImage *cachedImage, NSData *cachedData, SDImageCacheType cacheType) {
@@ -175,7 +180,10 @@
                 downloaderOptions |= SDWebImageDownloaderIgnoreCachedResponse;
             }
             
+            // MARK:SDWebImageDownloader 开始下载
             SDWebImageDownloadToken *subOperationToken = [self.imageDownloader downloadImageWithURL:url options:downloaderOptions progress:progressBlock completed:^(UIImage *downloadedImage, NSData *downloadedData, NSError *error, BOOL finished) {
+                
+                // 下载完的回调
                 __strong __typeof(weakOperation) strongOperation = weakOperation;
                 if (!strongOperation || strongOperation.isCancelled) {
                     // Do nothing if the operation was cancelled

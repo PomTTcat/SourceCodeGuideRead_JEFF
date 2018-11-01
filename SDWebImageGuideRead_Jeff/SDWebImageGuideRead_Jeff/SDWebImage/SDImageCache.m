@@ -326,6 +326,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
         return data;
     }
 
+    // 如果有自定义的路径，则通过自定义的路径去访问。
     NSArray<NSString *> *customPaths = [self.customPaths copy];
     for (NSString *path in customPaths) {
         NSString *filePath = [self cachePathForKey:key inPath:path];
@@ -392,7 +393,10 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
         }
 
         @autoreleasepool {
+            // 看 disk中是否有图片。 （用url的md5值）
             NSData *diskData = [self diskImageDataBySearchingAllPathsForKey:key];
+            
+            // 如果disk中有，则返回图片。 （并缓存到cache中）
             UIImage *diskImage = [self diskImageForKey:key];
             if (diskImage && self.config.shouldCacheImagesInMemory) {
                 NSUInteger cost = SDCacheCostForImage(diskImage);

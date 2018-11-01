@@ -48,8 +48,13 @@ static char TAG_ACTIVITY_SHOW;
                           progress:(nullable SDWebImageDownloaderProgressBlock)progressBlock
                          completed:(nullable SDExternalCompletionBlock)completedBlock
                            context:(nullable NSDictionary *)context {
+    
+    // 默认key为类名
     NSString *validOperationKey = operationKey ?: NSStringFromClass([self class]);
+    
     [self sd_cancelImageLoadOperationWithKey:validOperationKey];
+    
+    // 关联对象存储url
     objc_setAssociatedObject(self, &imageURLKey, url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     if (!(options & SDWebImageDelayPlaceholder)) {
@@ -113,6 +118,7 @@ static char TAG_ACTIVITY_SHOW;
                 targetData = nil;
             }
             
+            // context默认是nil。
             if ([context valueForKey:SDWebImageInternalSetImageGroupKey]) {
                 dispatch_group_t group = [context valueForKey:SDWebImageInternalSetImageGroupKey];
                 dispatch_group_enter(group);
@@ -125,13 +131,18 @@ static char TAG_ACTIVITY_SHOW;
                 });
             } else {
                 dispatch_main_async_safe(^{
+                    
+                    // setImageBlock需要自定义。一般可忽略。 默认就是简单赋值。
                     [sself sd_setImage:targetImage imageData:targetData basedOnClassOrViaCustomSetImageBlock:setImageBlock];
                     callCompletedBlockClojure();
                 });
             }
         }];
+        
+        // 把key和operation进行一个绑定
         [self sd_setImageLoadOperation:operation forKey:validOperationKey];
     } else {
+        // 这个宏定义就是 异步回调到主线程执行。
         dispatch_main_async_safe(^{
             [self sd_removeActivityIndicator];
             if (completedBlock) {

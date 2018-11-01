@@ -33,6 +33,7 @@ typedef NSMapTable<NSString *, id<SDWebImageOperation>> SDOperationsDictionary;
 }
 
 - (void)sd_setImageLoadOperation:(nullable id<SDWebImageOperation>)operation forKey:(nullable NSString *)key {
+    // key默认是调用者的类名，比如UIImageView
     if (key) {
         [self sd_cancelImageLoadOperationWithKey:key];
         if (operation) {
@@ -53,6 +54,7 @@ typedef NSMapTable<NSString *, id<SDWebImageOperation>> SDOperationsDictionary;
     }
     if (operation) {
         if ([operation conformsToProtocol:@protocol(SDWebImageOperation)]){
+            // 关闭下载连接，情况等一些操作。
             [operation cancel];
         }
         @synchronized (self) {

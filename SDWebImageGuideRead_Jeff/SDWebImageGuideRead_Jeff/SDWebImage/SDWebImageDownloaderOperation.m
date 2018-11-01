@@ -120,9 +120,12 @@ typedef NSMutableDictionary<NSString *, id> SDCallbacksDictionary;
 #if SD_UIKIT
         Class UIApplicationClass = NSClassFromString(@"UIApplication");
         BOOL hasApplication = UIApplicationClass && [UIApplicationClass respondsToSelector:@selector(sharedApplication)];
+        // 如果option中选择了后台下载。则会添加
         if (hasApplication && [self shouldContinueWhenAppEntersBackground]) {
             __weak __typeof__ (self) wself = self;
             UIApplication * app = [UIApplicationClass performSelector:@selector(sharedApplication)];
+            
+            // 下载超时处理。
             self.backgroundTaskId = [app beginBackgroundTaskWithExpirationHandler:^{
                 __strong __typeof (wself) sself = wself;
 
@@ -144,6 +147,7 @@ typedef NSMutableDictionary<NSString *, id> SDCallbacksDictionary;
         }
         
         NSURLSession *session = self.unownedSession;
+        // 一般情况下self.unownedSession都是有的，来自downloaderManager.所以除非你自己情况，不然没必要自己重新生成一个。
         if (!self.unownedSession) {
             NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
             sessionConfig.timeoutIntervalForRequest = 15;
@@ -188,6 +192,9 @@ typedef NSMutableDictionary<NSString *, id> SDCallbacksDictionary;
         self.backgroundTaskId = UIBackgroundTaskInvalid;
     }
 #endif
+    
+    // debug 代码
+    NSLog(@"start is finish in %@",[NSThread currentThread]);
 }
 
 - (void)cancel {
@@ -207,6 +214,7 @@ typedef NSMutableDictionary<NSString *, id> SDCallbacksDictionary;
             [[NSNotificationCenter defaultCenter] postNotificationName:SDWebImageDownloadStopNotification object:weakSelf];
         });
 
+        // 已经取消了连接，手动置位。
         // As we cancelled the connection, its callback won't be called and thus won't
         // maintain the isFinished and isExecuting flags.
         if (self.isExecuting) self.executing = NO;
@@ -222,6 +230,7 @@ typedef NSMutableDictionary<NSString *, id> SDCallbacksDictionary;
     [self reset];
 }
 
+// 做一些清空操作。
 - (void)reset {
     __weak typeof(self) weakSelf = self;
     dispatch_barrier_async(self.barrierQueue, ^{
@@ -248,6 +257,10 @@ typedef NSMutableDictionary<NSString *, id> SDCallbacksDictionary;
     }
 }
 
+/*
+ 源码里应该是加了判断，只要当前类重写了finish的setter或者getter方法。start结束就不会自动去调用 finish的KVO,导致complete触发。
+ */
+// 重写finished的set方法很重要。这样才能自己控制operation结束的时间。
 - (void)setFinished:(BOOL)finished {
     [self willChangeValueForKey:@"isFinished"];
     _finished = finished;
@@ -270,7 +283,7 @@ typedef NSMutableDictionary<NSString *, id> SDCallbacksDictionary;
           dataTask:(NSURLSessionDataTask *)dataTask
 didReceiveResponse:(NSURLResponse *)response
  completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
-    
+    NSLog(@"%s",__func__);
     //'304 Not Modified' is an exceptional one
     if (![response respondsToSelector:@selector(statusCode)] || (((NSHTTPURLResponse *)response).statusCode < 400 && ((NSHTTPURLResponse *)response).statusCode != 304)) {
         NSInteger expected = (NSInteger)response.expectedContentLength;
@@ -312,6 +325,7 @@ didReceiveResponse:(NSURLResponse *)response
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
+    NSLog(@"%s",__func__);
     [self.imageData appendData:data];
 
     if ((self.options & SDWebImageDownloaderProgressiveDownload) && self.expectedSize > 0) {
@@ -354,7 +368,7 @@ didReceiveResponse:(NSURLResponse *)response
           dataTask:(NSURLSessionDataTask *)dataTask
  willCacheResponse:(NSCachedURLResponse *)proposedResponse
  completionHandler:(void (^)(NSCachedURLResponse *cachedResponse))completionHandler {
-    
+    NSLog(@"%s",__func__);
     NSCachedURLResponse *cachedResponse = proposedResponse;
 
     if (self.request.cachePolicy == NSURLRequestReloadIgnoringLocalCacheData) {
@@ -369,6 +383,7 @@ didReceiveResponse:(NSURLResponse *)response
 #pragma mark NSURLSessionTaskDelegate
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    NSLog(@"%s",__func__);
     @synchronized(self) {
         self.dataTask = nil;
         __weak typeof(self) weakSelf = self;
@@ -422,6 +437,7 @@ didReceiveResponse:(NSURLResponse *)response
                     if (CGSizeEqualToSize(image.size, CGSizeZero)) {
                         [self callCompletionBlocksWithError:[NSError errorWithDomain:SDWebImageErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey : @"Downloaded image has 0 pixels"}]];
                     } else {
+                        // URLSession下载完成的回调
                         [self callCompletionBlocksWithImage:image imageData:imageData error:nil finished:YES];
                     }
                 }
@@ -434,6 +450,7 @@ didReceiveResponse:(NSURLResponse *)response
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler {
+    NSLog(@"%s",__func__);
     
     NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
     __block NSURLCredential *credential = nil;
@@ -483,9 +500,11 @@ didReceiveResponse:(NSURLResponse *)response
     NSArray<id> *completionBlocks = [self callbacksForKey:kCompletedCallbackKey];
     dispatch_main_async_safe(^{
         for (SDWebImageDownloaderCompletedBlock completedBlock in completionBlocks) {
+            // urlsession下载完毕后手动调用completedBlock
             completedBlock(image, imageData, error, finished);
         }
     });
 }
+
 
 @end
