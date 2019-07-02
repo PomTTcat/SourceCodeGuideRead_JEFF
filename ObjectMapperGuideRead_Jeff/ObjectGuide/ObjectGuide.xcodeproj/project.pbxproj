@@ -1,0 +1,482 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ADAC751E22C4C5B7005D0351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC751D22C4C5B7005D0351 /* AppDelegate.swift */; };
+		ADAC752022C4C5B7005D0351 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC751F22C4C5B7005D0351 /* ViewController.swift */; };
+		ADAC752322C4C5B7005D0351 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADAC752122C4C5B7005D0351 /* Main.storyboard */; };
+		ADAC752522C4C5B8005D0351 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADAC752422C4C5B8005D0351 /* Assets.xcassets */; };
+		ADAC752822C4C5B8005D0351 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADAC752622C4C5B8005D0351 /* LaunchScreen.storyboard */; };
+		ADAC754822C4C5D2005D0351 /* Mappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753022C4C5D2005D0351 /* Mappable.swift */; };
+		ADAC754922C4C5D2005D0351 /* CustomDateFormatTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753122C4C5D2005D0351 /* CustomDateFormatTransform.swift */; };
+		ADAC754A22C4C5D2005D0351 /* HexColorTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753222C4C5D2005D0351 /* HexColorTransform.swift */; };
+		ADAC754B22C4C5D2005D0351 /* ISO8601DateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753322C4C5D2005D0351 /* ISO8601DateTransform.swift */; };
+		ADAC754C22C4C5D2005D0351 /* URLTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753422C4C5D2005D0351 /* URLTransform.swift */; };
+		ADAC754D22C4C5D2005D0351 /* NSDecimalNumberTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753522C4C5D2005D0351 /* NSDecimalNumberTransform.swift */; };
+		ADAC754E22C4C5D2005D0351 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753622C4C5D2005D0351 /* Operators.swift */; };
+		ADAC754F22C4C5D2005D0351 /* EnumOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753722C4C5D2005D0351 /* EnumOperators.swift */; };
+		ADAC755022C4C5D2005D0351 /* EnumTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753822C4C5D2005D0351 /* EnumTransform.swift */; };
+		ADAC755122C4C5D2005D0351 /* DataTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753922C4C5D2005D0351 /* DataTransform.swift */; };
+		ADAC755222C4C5D2005D0351 /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753A22C4C5D2005D0351 /* Mapper.swift */; };
+		ADAC755322C4C5D2005D0351 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753B22C4C5D2005D0351 /* Map.swift */; };
+		ADAC755422C4C5D2005D0351 /* FromJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753C22C4C5D2005D0351 /* FromJSON.swift */; };
+		ADAC755522C4C5D2005D0351 /* DictionaryTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753D22C4C5D2005D0351 /* DictionaryTransform.swift */; };
+		ADAC755622C4C5D2005D0351 /* TransformOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753E22C4C5D2005D0351 /* TransformOperators.swift */; };
+		ADAC755722C4C5D2005D0351 /* CodableTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC753F22C4C5D2005D0351 /* CodableTransform.swift */; };
+		ADAC755822C4C5D2005D0351 /* ImmutableMappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC754022C4C5D2005D0351 /* ImmutableMappable.swift */; };
+		ADAC755922C4C5D2005D0351 /* IntegerOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC754122C4C5D2005D0351 /* IntegerOperators.swift */; };
+		ADAC755A22C4C5D2005D0351 /* TransformType.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC754222C4C5D2005D0351 /* TransformType.swift */; };
+		ADAC755B22C4C5D2005D0351 /* MapError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC754322C4C5D2005D0351 /* MapError.swift */; };
+		ADAC755C22C4C5D2005D0351 /* DateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC754422C4C5D2005D0351 /* DateTransform.swift */; };
+		ADAC755D22C4C5D2005D0351 /* DateFormatterTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC754522C4C5D2005D0351 /* DateFormatterTransform.swift */; };
+		ADAC755E22C4C5D2005D0351 /* ToJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC754622C4C5D2005D0351 /* ToJSON.swift */; };
+		ADAC755F22C4C5D2005D0351 /* TransformOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC754722C4C5D2005D0351 /* TransformOf.swift */; };
+		ADAC756522C4C7B8005D0351 /* ObjectMapperDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC756122C4C7B8005D0351 /* ObjectMapperDemo.swift */; };
+		ADAC756622C4C7B8005D0351 /* ObjectMapperDemo2.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC756222C4C7B8005D0351 /* ObjectMapperDemo2.swift */; };
+		ADAC756822C4C7B8005D0351 /* ObjectMapperDemo3.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC756422C4C7B8005D0351 /* ObjectMapperDemo3.swift */; };
+		ADAC756A22C4CA72005D0351 /* easyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC756922C4CA72005D0351 /* easyModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		ADAC751A22C4C5B7005D0351 /* ObjectGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjectGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADAC751D22C4C5B7005D0351 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		ADAC751F22C4C5B7005D0351 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		ADAC752222C4C5B7005D0351 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		ADAC752422C4C5B8005D0351 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ADAC752722C4C5B8005D0351 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		ADAC752922C4C5B8005D0351 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADAC753022C4C5D2005D0351 /* Mappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mappable.swift; sourceTree = "<group>"; };
+		ADAC753122C4C5D2005D0351 /* CustomDateFormatTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomDateFormatTransform.swift; sourceTree = "<group>"; };
+		ADAC753222C4C5D2005D0351 /* HexColorTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HexColorTransform.swift; sourceTree = "<group>"; };
+		ADAC753322C4C5D2005D0351 /* ISO8601DateTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISO8601DateTransform.swift; sourceTree = "<group>"; };
+		ADAC753422C4C5D2005D0351 /* URLTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLTransform.swift; sourceTree = "<group>"; };
+		ADAC753522C4C5D2005D0351 /* NSDecimalNumberTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDecimalNumberTransform.swift; sourceTree = "<group>"; };
+		ADAC753622C4C5D2005D0351 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		ADAC753722C4C5D2005D0351 /* EnumOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnumOperators.swift; sourceTree = "<group>"; };
+		ADAC753822C4C5D2005D0351 /* EnumTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnumTransform.swift; sourceTree = "<group>"; };
+		ADAC753922C4C5D2005D0351 /* DataTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataTransform.swift; sourceTree = "<group>"; };
+		ADAC753A22C4C5D2005D0351 /* Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
+		ADAC753B22C4C5D2005D0351 /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		ADAC753C22C4C5D2005D0351 /* FromJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FromJSON.swift; sourceTree = "<group>"; };
+		ADAC753D22C4C5D2005D0351 /* DictionaryTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTransform.swift; sourceTree = "<group>"; };
+		ADAC753E22C4C5D2005D0351 /* TransformOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformOperators.swift; sourceTree = "<group>"; };
+		ADAC753F22C4C5D2005D0351 /* CodableTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodableTransform.swift; sourceTree = "<group>"; };
+		ADAC754022C4C5D2005D0351 /* ImmutableMappable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmutableMappable.swift; sourceTree = "<group>"; };
+		ADAC754122C4C5D2005D0351 /* IntegerOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegerOperators.swift; sourceTree = "<group>"; };
+		ADAC754222C4C5D2005D0351 /* TransformType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformType.swift; sourceTree = "<group>"; };
+		ADAC754322C4C5D2005D0351 /* MapError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapError.swift; sourceTree = "<group>"; };
+		ADAC754422C4C5D2005D0351 /* DateTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTransform.swift; sourceTree = "<group>"; };
+		ADAC754522C4C5D2005D0351 /* DateFormatterTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatterTransform.swift; sourceTree = "<group>"; };
+		ADAC754622C4C5D2005D0351 /* ToJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToJSON.swift; sourceTree = "<group>"; };
+		ADAC754722C4C5D2005D0351 /* TransformOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformOf.swift; sourceTree = "<group>"; };
+		ADAC756122C4C7B8005D0351 /* ObjectMapperDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperDemo.swift; sourceTree = "<group>"; };
+		ADAC756222C4C7B8005D0351 /* ObjectMapperDemo2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperDemo2.swift; sourceTree = "<group>"; };
+		ADAC756422C4C7B8005D0351 /* ObjectMapperDemo3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperDemo3.swift; sourceTree = "<group>"; };
+		ADAC756922C4CA72005D0351 /* easyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = easyModel.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ADAC751722C4C5B7005D0351 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD719B8622CA0C2B004CC868 /* operation */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC753622C4C5D2005D0351 /* Operators.swift */,
+				ADAC753722C4C5D2005D0351 /* EnumOperators.swift */,
+				ADAC753E22C4C5D2005D0351 /* TransformOperators.swift */,
+				ADAC754122C4C5D2005D0351 /* IntegerOperators.swift */,
+			);
+			path = operation;
+			sourceTree = "<group>";
+		};
+		AD719B8B22CB391D004CC868 /* transform */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC753922C4C5D2005D0351 /* DataTransform.swift */,
+				ADAC753122C4C5D2005D0351 /* CustomDateFormatTransform.swift */,
+				ADAC753222C4C5D2005D0351 /* HexColorTransform.swift */,
+				ADAC753322C4C5D2005D0351 /* ISO8601DateTransform.swift */,
+				ADAC753422C4C5D2005D0351 /* URLTransform.swift */,
+				ADAC753522C4C5D2005D0351 /* NSDecimalNumberTransform.swift */,
+				ADAC753D22C4C5D2005D0351 /* DictionaryTransform.swift */,
+				ADAC753F22C4C5D2005D0351 /* CodableTransform.swift */,
+				ADAC754422C4C5D2005D0351 /* DateTransform.swift */,
+				ADAC754522C4C5D2005D0351 /* DateFormatterTransform.swift */,
+			);
+			path = transform;
+			sourceTree = "<group>";
+		};
+		ADAC751122C4C5B7005D0351 = {
+			isa = PBXGroup;
+			children = (
+				ADAC751C22C4C5B7005D0351 /* ObjectGuide */,
+				ADAC751B22C4C5B7005D0351 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ADAC751B22C4C5B7005D0351 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC751A22C4C5B7005D0351 /* ObjectGuide.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ADAC751C22C4C5B7005D0351 /* ObjectGuide */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC752F22C4C5D2005D0351 /* 3.5.0_ObjectMapper */,
+				ADAC756022C4C7B8005D0351 /* ObjectMapper */,
+				ADAC751D22C4C5B7005D0351 /* AppDelegate.swift */,
+				ADAC751F22C4C5B7005D0351 /* ViewController.swift */,
+				ADAC752122C4C5B7005D0351 /* Main.storyboard */,
+				ADAC752422C4C5B8005D0351 /* Assets.xcassets */,
+				ADAC752622C4C5B8005D0351 /* LaunchScreen.storyboard */,
+				ADAC752922C4C5B8005D0351 /* Info.plist */,
+			);
+			path = ObjectGuide;
+			sourceTree = "<group>";
+		};
+		ADAC752F22C4C5D2005D0351 /* 3.5.0_ObjectMapper */ = {
+			isa = PBXGroup;
+			children = (
+				AD719B8B22CB391D004CC868 /* transform */,
+				AD719B8622CA0C2B004CC868 /* operation */,
+				ADAC753022C4C5D2005D0351 /* Mappable.swift */,
+				ADAC753822C4C5D2005D0351 /* EnumTransform.swift */,
+				ADAC753A22C4C5D2005D0351 /* Mapper.swift */,
+				ADAC753B22C4C5D2005D0351 /* Map.swift */,
+				ADAC753C22C4C5D2005D0351 /* FromJSON.swift */,
+				ADAC754022C4C5D2005D0351 /* ImmutableMappable.swift */,
+				ADAC754222C4C5D2005D0351 /* TransformType.swift */,
+				ADAC754322C4C5D2005D0351 /* MapError.swift */,
+				ADAC754622C4C5D2005D0351 /* ToJSON.swift */,
+				ADAC754722C4C5D2005D0351 /* TransformOf.swift */,
+			);
+			path = 3.5.0_ObjectMapper;
+			sourceTree = "<group>";
+		};
+		ADAC756022C4C7B8005D0351 /* ObjectMapper */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC756122C4C7B8005D0351 /* ObjectMapperDemo.swift */,
+				ADAC756222C4C7B8005D0351 /* ObjectMapperDemo2.swift */,
+				ADAC756422C4C7B8005D0351 /* ObjectMapperDemo3.swift */,
+				ADAC756922C4CA72005D0351 /* easyModel.swift */,
+			);
+			path = ObjectMapper;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ADAC751922C4C5B7005D0351 /* ObjectGuide */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADAC752C22C4C5B8005D0351 /* Build configuration list for PBXNativeTarget "ObjectGuide" */;
+			buildPhases = (
+				ADAC751622C4C5B7005D0351 /* Sources */,
+				ADAC751722C4C5B7005D0351 /* Frameworks */,
+				ADAC751822C4C5B7005D0351 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ObjectGuide;
+			productName = ObjectGuide;
+			productReference = ADAC751A22C4C5B7005D0351 /* ObjectGuide.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ADAC751222C4C5B7005D0351 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				TargetAttributes = {
+					ADAC751922C4C5B7005D0351 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+				};
+			};
+			buildConfigurationList = ADAC751522C4C5B7005D0351 /* Build configuration list for PBXProject "ObjectGuide" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ADAC751122C4C5B7005D0351;
+			productRefGroup = ADAC751B22C4C5B7005D0351 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ADAC751922C4C5B7005D0351 /* ObjectGuide */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ADAC751822C4C5B7005D0351 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADAC752822C4C5B8005D0351 /* LaunchScreen.storyboard in Resources */,
+				ADAC752522C4C5B8005D0351 /* Assets.xcassets in Resources */,
+				ADAC752322C4C5B7005D0351 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ADAC751622C4C5B7005D0351 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADAC756822C4C7B8005D0351 /* ObjectMapperDemo3.swift in Sources */,
+				ADAC755622C4C5D2005D0351 /* TransformOperators.swift in Sources */,
+				ADAC755B22C4C5D2005D0351 /* MapError.swift in Sources */,
+				ADAC754922C4C5D2005D0351 /* CustomDateFormatTransform.swift in Sources */,
+				ADAC752022C4C5B7005D0351 /* ViewController.swift in Sources */,
+				ADAC755722C4C5D2005D0351 /* CodableTransform.swift in Sources */,
+				ADAC756622C4C7B8005D0351 /* ObjectMapperDemo2.swift in Sources */,
+				ADAC755D22C4C5D2005D0351 /* DateFormatterTransform.swift in Sources */,
+				ADAC754C22C4C5D2005D0351 /* URLTransform.swift in Sources */,
+				ADAC754822C4C5D2005D0351 /* Mappable.swift in Sources */,
+				ADAC755122C4C5D2005D0351 /* DataTransform.swift in Sources */,
+				ADAC755422C4C5D2005D0351 /* FromJSON.swift in Sources */,
+				ADAC755522C4C5D2005D0351 /* DictionaryTransform.swift in Sources */,
+				ADAC755822C4C5D2005D0351 /* ImmutableMappable.swift in Sources */,
+				ADAC755A22C4C5D2005D0351 /* TransformType.swift in Sources */,
+				ADAC756A22C4CA72005D0351 /* easyModel.swift in Sources */,
+				ADAC755022C4C5D2005D0351 /* EnumTransform.swift in Sources */,
+				ADAC755222C4C5D2005D0351 /* Mapper.swift in Sources */,
+				ADAC755F22C4C5D2005D0351 /* TransformOf.swift in Sources */,
+				ADAC754B22C4C5D2005D0351 /* ISO8601DateTransform.swift in Sources */,
+				ADAC754A22C4C5D2005D0351 /* HexColorTransform.swift in Sources */,
+				ADAC755922C4C5D2005D0351 /* IntegerOperators.swift in Sources */,
+				ADAC755E22C4C5D2005D0351 /* ToJSON.swift in Sources */,
+				ADAC754D22C4C5D2005D0351 /* NSDecimalNumberTransform.swift in Sources */,
+				ADAC755322C4C5D2005D0351 /* Map.swift in Sources */,
+				ADAC751E22C4C5B7005D0351 /* AppDelegate.swift in Sources */,
+				ADAC756522C4C7B8005D0351 /* ObjectMapperDemo.swift in Sources */,
+				ADAC754F22C4C5D2005D0351 /* EnumOperators.swift in Sources */,
+				ADAC755C22C4C5D2005D0351 /* DateTransform.swift in Sources */,
+				ADAC754E22C4C5D2005D0351 /* Operators.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		ADAC752122C4C5B7005D0351 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ADAC752222C4C5B7005D0351 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		ADAC752622C4C5B8005D0351 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ADAC752722C4C5B8005D0351 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ADAC752A22C4C5B8005D0351 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		ADAC752B22C4C5B8005D0351 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ADAC752D22C4C5B8005D0351 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ObjectGuide/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-23.ObjectGuide";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ADAC752E22C4C5B8005D0351 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ObjectGuide/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "-23.ObjectGuide";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ADAC751522C4C5B7005D0351 /* Build configuration list for PBXProject "ObjectGuide" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADAC752A22C4C5B8005D0351 /* Debug */,
+				ADAC752B22C4C5B8005D0351 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADAC752C22C4C5B8005D0351 /* Build configuration list for PBXNativeTarget "ObjectGuide" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADAC752D22C4C5B8005D0351 /* Debug */,
+				ADAC752E22C4C5B8005D0351 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ADAC751222C4C5B7005D0351 /* Project object */;
+}
