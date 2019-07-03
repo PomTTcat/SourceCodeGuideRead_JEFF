@@ -18,13 +18,17 @@ class ViewController: UIViewController {
 
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        EasyUser.modelWithDict()
+//        MappableDemo()
+//        StaticMappableDemo()
         
-        //        User.modelWithDict()
-        //        User.modelWithJSONString()
-        //        StaticMappableDemo()
-        //        ObjectMapperDemoFunc1()
+        // 数组使用
+//        MapArrayDemo()
         
+        // 嵌套对象使用
+        highLevelModelDemo()
+        
+        // transformOf使用
+//        transformOfDemo()
     }
 }
 

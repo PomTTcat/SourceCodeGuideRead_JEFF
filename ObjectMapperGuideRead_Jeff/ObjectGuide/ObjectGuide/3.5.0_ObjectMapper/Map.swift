@@ -99,7 +99,6 @@ public final class Map {
 		currentKey = key
 		keyIsNested = nested ?? key.contains(delimiter)
 		nestedKeyDelimiter = delimiter
-		print("subscript \(key)")
 		if mappingType == .fromJSON {
 			// check if a value exists for the current key
 			// do this pre-check for performance reasons
@@ -125,20 +124,24 @@ public final class Map {
     // 这个方法的注意一下什么意思。❓
 	public func value<T>() -> T? {
 		let value = currentValue as? T
-		print(T.self)
         
 		// Swift 4.1 breaks Float casting from `NSNumber`. So Added extra checks for `Float` `[Float]` and `[String:Float]`
+        // 如果Float类型，需要先转成NSNumber，再通过floatValue转成Float
+        // value -> NSNumber -> floatValue
 		if value == nil && T.self == Float.self {
 			if let v = currentValue as? NSNumber {
 				return v.floatValue as? T
 			}
 		} else if value == nil && T.self == [Float].self {
+            // value -> [Double] -> [Float]
+            // 必须使用[Double],不能用[Float]
 			if let v = currentValue as? [Double] {
 				
 				return v.compactMap{ Float($0) } as? T
 		
 			}
 		} else if value == nil && T.self == [String:Float].self {
+            // value -> [String:Double] -> [String:Float]
 			if let v = currentValue as? [String:Double] {
 				return v.mapValues{ Float($0) } as? T
 			}
@@ -154,6 +157,12 @@ private func valueFor(_ keyPathComponents: ArraySlice<String>, dictionary: [Stri
 		return (false, nil)
 	}
 	
+    /*
+     主要分两步：
+     1.依据第一个key，获取key对应的json为value1
+     2.依据json的情况，丢掉数组第一个。然后把[新数组]和[value1]传递给valuefor。
+     */
+    
 	if let keyPath = keyPathComponents.first {
 		let isTail = keyPathComponents.count == 1
 		let object = dictionary[keyPath]
@@ -180,6 +189,12 @@ private func valueFor(_ keyPathComponents: ArraySlice<String>, array: [Any]) -> 
 	if keyPathComponents.isEmpty {
 		return (false, nil)
 	}
+    
+    /*
+     主要分两步：
+     1.依据keyPath（必定是能转换成数字的。），去json数组中获取对应的json
+     2.依据json的情况，丢掉数组第一个。然后把[新数组]和[value1]传递给valuefor。
+     */
 	
 	//Try to convert keypath to Int as index
 	if let keyPath = keyPathComponents.first,

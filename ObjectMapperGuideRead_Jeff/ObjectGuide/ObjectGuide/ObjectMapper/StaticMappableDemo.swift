@@ -3,8 +3,6 @@
 
 import Foundation
 
-
-//交通工具
 class Vehicle: StaticMappable {
     //类型
     var type: String?
@@ -24,7 +22,9 @@ class Vehicle: StaticMappable {
         return nil
     }
     
+    // 这个是默认的init方法。如果想和Mappable一样走 init?(map: Map) 方法。在objectForMapping指定init方法即可。
     init(){
+        
     }
     
     func mapping(map: Map) {
@@ -55,19 +55,17 @@ class Bus: Vehicle {
 }
 
 func StaticMappableDemo() {
-    let JSON = [["type": "car", "name": "奇瑞QQ"],
-                ["type": "bus", "fee": 2],
-                ["type": "vehicle"]]
-//    /Users/guanyujie/Library/Mobile Documents/com~apple~CloudDocs/HXYL/qubeiThirdPart/qubeiThirdPart/ObjectMapper/ObjectMapperDemo2.swift:67:8: Initializer for conditional binding must have Optional type, not '[Vehicle]'
-    
-    let vehicles = Mapper<Vehicle>().mapArray(JSONArray: JSON)
-    
-    print("交通工具数量：\(vehicles.count)")
-    if let car = vehicles[0] as? Car {
-        print("小汽车名字：\(car.name!)")
-    }
-    if let bus = vehicles[1] as? Bus {
-        print("公交车费用：\(bus.fee!) 元")
-    }
-   
+    StaticMappableDemo1()
+
 }
+
+func StaticMappableDemo1() {
+    let JSON = ["type": "car", "name": "奇瑞QQ"]
+    
+    // 观察objectForMapping方法。
+    let car = Car(JSON: JSON)
+    
+    print(car)
+}
+
+

@@ -1,7 +1,13 @@
+//
+//  Mappable数据自定义变换.swift
+//  ObjectGuide
+//
+//  Created by PomCat on 2019/7/3.
+//
 
 import Foundation
 
-class UserNew: Mappable {
+fileprivate class User2: Mappable {
     var username: String?
     var birthday: Date?
     
@@ -18,13 +24,16 @@ class UserNew: Mappable {
     }
 }
 
-
-
-func ObjectMapperDemoFunc1() {
-    let lilei = UserNew()
+func transformOfDemo() {
+    let lilei = User2()
     lilei.username = "李雷"
     lilei.birthday = Date()
     
     let json = lilei.toJSONString()!
+    
+    let li = User2(JSONString: json)
+    
     print(json)
 }
+
+

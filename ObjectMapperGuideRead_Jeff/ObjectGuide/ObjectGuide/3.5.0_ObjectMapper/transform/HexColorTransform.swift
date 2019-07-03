@@ -24,20 +24,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#if os(iOS) || os(tvOS) || os(watchOS)
-import UIKit
-#elseif os(macOS)
-import Cocoa
-#endif
 
-#if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
+import UIKit
+
 open class HexColorTransform: TransformType {
 	
-	#if os(iOS) || os(tvOS) || os(watchOS)
 	public typealias Object = UIColor
-	#else
-	public typealias Object = NSColor
-	#endif
 	
 	public typealias JSON = String
 	
@@ -134,11 +126,9 @@ open class HexColorTransform: TransformType {
 			// "Scan hex error
 			return nil
 		}
-		#if os(iOS) || os(tvOS) || os(watchOS)
-			return UIColor(red: red, green: green, blue: blue, alpha: alpha)
-		#else
-			return NSColor(red: red, green: green, blue: blue, alpha: alpha)
-		#endif
+		
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+
 	}
 }
-#endif
+

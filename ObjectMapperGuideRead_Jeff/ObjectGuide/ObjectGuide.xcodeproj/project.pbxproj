@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD719C2822CC4E99004CC868 /* Blogs.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD719C2722CC4E99004CC868 /* Blogs.swift */; };
+		AD719C2D22CC592C004CC868 /* MapArrayDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD719C2C22CC592C004CC868 /* MapArrayDemo.swift */; };
+		AD719C2F22CC8311004CC868 /* Mappable嵌套对象.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD719C2E22CC8311004CC868 /* Mappable嵌套对象.swift */; };
+		AD719C3122CC87AE004CC868 /* Mappable数据自定义变换.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD719C3022CC87AE004CC868 /* Mappable数据自定义变换.swift */; };
 		ADAC751E22C4C5B7005D0351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC751D22C4C5B7005D0351 /* AppDelegate.swift */; };
 		ADAC752022C4C5B7005D0351 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC751F22C4C5B7005D0351 /* ViewController.swift */; };
 		ADAC752322C4C5B7005D0351 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADAC752122C4C5B7005D0351 /* Main.storyboard */; };
@@ -37,12 +41,16 @@
 		ADAC755E22C4C5D2005D0351 /* ToJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC754622C4C5D2005D0351 /* ToJSON.swift */; };
 		ADAC755F22C4C5D2005D0351 /* TransformOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC754722C4C5D2005D0351 /* TransformOf.swift */; };
 		ADAC756522C4C7B8005D0351 /* ObjectMapperDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC756122C4C7B8005D0351 /* ObjectMapperDemo.swift */; };
-		ADAC756622C4C7B8005D0351 /* ObjectMapperDemo2.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC756222C4C7B8005D0351 /* ObjectMapperDemo2.swift */; };
-		ADAC756822C4C7B8005D0351 /* ObjectMapperDemo3.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC756422C4C7B8005D0351 /* ObjectMapperDemo3.swift */; };
-		ADAC756A22C4CA72005D0351 /* easyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC756922C4CA72005D0351 /* easyModel.swift */; };
+		ADAC756622C4C7B8005D0351 /* StaticMappableDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC756222C4C7B8005D0351 /* StaticMappableDemo.swift */; };
+		ADAC756822C4C7B8005D0351 /* MappableDemo2.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC756422C4C7B8005D0351 /* MappableDemo2.swift */; };
+		ADAC756A22C4CA72005D0351 /* MappableDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC756922C4CA72005D0351 /* MappableDemo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AD719C2722CC4E99004CC868 /* Blogs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blogs.swift; sourceTree = "<group>"; };
+		AD719C2C22CC592C004CC868 /* MapArrayDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapArrayDemo.swift; sourceTree = "<group>"; };
+		AD719C2E22CC8311004CC868 /* Mappable嵌套对象.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mappable嵌套对象.swift"; sourceTree = "<group>"; };
+		AD719C3022CC87AE004CC868 /* Mappable数据自定义变换.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mappable数据自定义变换.swift"; sourceTree = "<group>"; };
 		ADAC751A22C4C5B7005D0351 /* ObjectGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjectGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAC751D22C4C5B7005D0351 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ADAC751F22C4C5B7005D0351 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -75,9 +83,9 @@
 		ADAC754622C4C5D2005D0351 /* ToJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToJSON.swift; sourceTree = "<group>"; };
 		ADAC754722C4C5D2005D0351 /* TransformOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformOf.swift; sourceTree = "<group>"; };
 		ADAC756122C4C7B8005D0351 /* ObjectMapperDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperDemo.swift; sourceTree = "<group>"; };
-		ADAC756222C4C7B8005D0351 /* ObjectMapperDemo2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperDemo2.swift; sourceTree = "<group>"; };
-		ADAC756422C4C7B8005D0351 /* ObjectMapperDemo3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectMapperDemo3.swift; sourceTree = "<group>"; };
-		ADAC756922C4CA72005D0351 /* easyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = easyModel.swift; sourceTree = "<group>"; };
+		ADAC756222C4C7B8005D0351 /* StaticMappableDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticMappableDemo.swift; sourceTree = "<group>"; };
+		ADAC756422C4C7B8005D0351 /* MappableDemo2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappableDemo2.swift; sourceTree = "<group>"; };
+		ADAC756922C4CA72005D0351 /* MappableDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappableDemo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +123,17 @@
 				ADAC753F22C4C5D2005D0351 /* CodableTransform.swift */,
 				ADAC754422C4C5D2005D0351 /* DateTransform.swift */,
 				ADAC754522C4C5D2005D0351 /* DateFormatterTransform.swift */,
+				ADAC753822C4C5D2005D0351 /* EnumTransform.swift */,
 			);
 			path = transform;
+			sourceTree = "<group>";
+		};
+		AD719C2B22CC590F004CC868 /* Array */ = {
+			isa = PBXGroup;
+			children = (
+				AD719C2C22CC592C004CC868 /* MapArrayDemo.swift */,
+			);
+			path = Array;
 			sourceTree = "<group>";
 		};
 		ADAC751122C4C5B7005D0351 = {
@@ -156,7 +173,6 @@
 				AD719B8B22CB391D004CC868 /* transform */,
 				AD719B8622CA0C2B004CC868 /* operation */,
 				ADAC753022C4C5D2005D0351 /* Mappable.swift */,
-				ADAC753822C4C5D2005D0351 /* EnumTransform.swift */,
 				ADAC753A22C4C5D2005D0351 /* Mapper.swift */,
 				ADAC753B22C4C5D2005D0351 /* Map.swift */,
 				ADAC753C22C4C5D2005D0351 /* FromJSON.swift */,
@@ -172,10 +188,14 @@
 		ADAC756022C4C7B8005D0351 /* ObjectMapper */ = {
 			isa = PBXGroup;
 			children = (
+				ADAC756922C4CA72005D0351 /* MappableDemo.swift */,
+				ADAC756422C4C7B8005D0351 /* MappableDemo2.swift */,
+				AD719C2E22CC8311004CC868 /* Mappable嵌套对象.swift */,
+				AD719C3022CC87AE004CC868 /* Mappable数据自定义变换.swift */,
+				ADAC756222C4C7B8005D0351 /* StaticMappableDemo.swift */,
+				AD719C2B22CC590F004CC868 /* Array */,
 				ADAC756122C4C7B8005D0351 /* ObjectMapperDemo.swift */,
-				ADAC756222C4C7B8005D0351 /* ObjectMapperDemo2.swift */,
-				ADAC756422C4C7B8005D0351 /* ObjectMapperDemo3.swift */,
-				ADAC756922C4CA72005D0351 /* easyModel.swift */,
+				AD719C2722CC4E99004CC868 /* Blogs.swift */,
 			);
 			path = ObjectMapper;
 			sourceTree = "<group>";
@@ -250,22 +270,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADAC756822C4C7B8005D0351 /* ObjectMapperDemo3.swift in Sources */,
+				ADAC756822C4C7B8005D0351 /* MappableDemo2.swift in Sources */,
 				ADAC755622C4C5D2005D0351 /* TransformOperators.swift in Sources */,
 				ADAC755B22C4C5D2005D0351 /* MapError.swift in Sources */,
+				AD719C3122CC87AE004CC868 /* Mappable数据自定义变换.swift in Sources */,
 				ADAC754922C4C5D2005D0351 /* CustomDateFormatTransform.swift in Sources */,
 				ADAC752022C4C5B7005D0351 /* ViewController.swift in Sources */,
 				ADAC755722C4C5D2005D0351 /* CodableTransform.swift in Sources */,
-				ADAC756622C4C7B8005D0351 /* ObjectMapperDemo2.swift in Sources */,
+				ADAC756622C4C7B8005D0351 /* StaticMappableDemo.swift in Sources */,
 				ADAC755D22C4C5D2005D0351 /* DateFormatterTransform.swift in Sources */,
 				ADAC754C22C4C5D2005D0351 /* URLTransform.swift in Sources */,
+				AD719C2822CC4E99004CC868 /* Blogs.swift in Sources */,
 				ADAC754822C4C5D2005D0351 /* Mappable.swift in Sources */,
 				ADAC755122C4C5D2005D0351 /* DataTransform.swift in Sources */,
 				ADAC755422C4C5D2005D0351 /* FromJSON.swift in Sources */,
 				ADAC755522C4C5D2005D0351 /* DictionaryTransform.swift in Sources */,
+				AD719C2F22CC8311004CC868 /* Mappable嵌套对象.swift in Sources */,
 				ADAC755822C4C5D2005D0351 /* ImmutableMappable.swift in Sources */,
+				AD719C2D22CC592C004CC868 /* MapArrayDemo.swift in Sources */,
 				ADAC755A22C4C5D2005D0351 /* TransformType.swift in Sources */,
-				ADAC756A22C4CA72005D0351 /* easyModel.swift in Sources */,
+				ADAC756A22C4CA72005D0351 /* MappableDemo.swift in Sources */,
 				ADAC755022C4C5D2005D0351 /* EnumTransform.swift in Sources */,
 				ADAC755222C4C5D2005D0351 /* Mapper.swift in Sources */,
 				ADAC755F22C4C5D2005D0351 /* TransformOf.swift in Sources */,

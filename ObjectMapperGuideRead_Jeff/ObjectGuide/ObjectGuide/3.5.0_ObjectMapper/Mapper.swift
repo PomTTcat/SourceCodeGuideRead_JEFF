@@ -266,6 +266,7 @@ public final class Mapper<N: BaseMappable> {
 
 	/// Convert a JSON String into an Object using NSJSONSerialization
 	public static func parseJSONString(JSONString: String) -> Any? {
+        // String -> data -> Any
 		let data = JSONString.data(using: String.Encoding.utf8, allowLossyConversion: true)
 		if let data = data {
 			let parsedJSON: Any?
