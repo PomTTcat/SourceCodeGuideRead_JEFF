@@ -11,6 +11,7 @@
 		AD719C2D22CC592C004CC868 /* MapArrayDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD719C2C22CC592C004CC868 /* MapArrayDemo.swift */; };
 		AD719C2F22CC8311004CC868 /* Mappable嵌套对象.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD719C2E22CC8311004CC868 /* Mappable嵌套对象.swift */; };
 		AD719C3122CC87AE004CC868 /* Mappable数据自定义变换.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD719C3022CC87AE004CC868 /* Mappable数据自定义变换.swift */; };
+		AD719C3322CCAC09004CC868 /* ImmutableMappableDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD719C3222CCAC09004CC868 /* ImmutableMappableDemo.swift */; };
 		ADAC751E22C4C5B7005D0351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC751D22C4C5B7005D0351 /* AppDelegate.swift */; };
 		ADAC752022C4C5B7005D0351 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC751F22C4C5B7005D0351 /* ViewController.swift */; };
 		ADAC752322C4C5B7005D0351 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADAC752122C4C5B7005D0351 /* Main.storyboard */; };
@@ -51,6 +52,7 @@
 		AD719C2C22CC592C004CC868 /* MapArrayDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapArrayDemo.swift; sourceTree = "<group>"; };
 		AD719C2E22CC8311004CC868 /* Mappable嵌套对象.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mappable嵌套对象.swift"; sourceTree = "<group>"; };
 		AD719C3022CC87AE004CC868 /* Mappable数据自定义变换.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mappable数据自定义变换.swift"; sourceTree = "<group>"; };
+		AD719C3222CCAC09004CC868 /* ImmutableMappableDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmutableMappableDemo.swift; sourceTree = "<group>"; };
 		ADAC751A22C4C5B7005D0351 /* ObjectGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjectGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAC751D22C4C5B7005D0351 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ADAC751F22C4C5B7005D0351 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -175,11 +177,11 @@
 				ADAC753022C4C5D2005D0351 /* Mappable.swift */,
 				ADAC753A22C4C5D2005D0351 /* Mapper.swift */,
 				ADAC753B22C4C5D2005D0351 /* Map.swift */,
-				ADAC753C22C4C5D2005D0351 /* FromJSON.swift */,
 				ADAC754022C4C5D2005D0351 /* ImmutableMappable.swift */,
+				ADAC753C22C4C5D2005D0351 /* FromJSON.swift */,
+				ADAC754622C4C5D2005D0351 /* ToJSON.swift */,
 				ADAC754222C4C5D2005D0351 /* TransformType.swift */,
 				ADAC754322C4C5D2005D0351 /* MapError.swift */,
-				ADAC754622C4C5D2005D0351 /* ToJSON.swift */,
 				ADAC754722C4C5D2005D0351 /* TransformOf.swift */,
 			);
 			path = 3.5.0_ObjectMapper;
@@ -193,6 +195,7 @@
 				AD719C2E22CC8311004CC868 /* Mappable嵌套对象.swift */,
 				AD719C3022CC87AE004CC868 /* Mappable数据自定义变换.swift */,
 				ADAC756222C4C7B8005D0351 /* StaticMappableDemo.swift */,
+				AD719C3222CCAC09004CC868 /* ImmutableMappableDemo.swift */,
 				AD719C2B22CC590F004CC868 /* Array */,
 				ADAC756122C4C7B8005D0351 /* ObjectMapperDemo.swift */,
 				AD719C2722CC4E99004CC868 /* Blogs.swift */,
@@ -273,6 +276,7 @@
 				ADAC756822C4C7B8005D0351 /* MappableDemo2.swift in Sources */,
 				ADAC755622C4C5D2005D0351 /* TransformOperators.swift in Sources */,
 				ADAC755B22C4C5D2005D0351 /* MapError.swift in Sources */,
+				AD719C3322CCAC09004CC868 /* ImmutableMappableDemo.swift in Sources */,
 				AD719C3122CC87AE004CC868 /* Mappable数据自定义变换.swift in Sources */,
 				ADAC754922C4C5D2005D0351 /* CustomDateFormatTransform.swift in Sources */,
 				ADAC752022C4C5B7005D0351 /* ViewController.swift in Sources */,

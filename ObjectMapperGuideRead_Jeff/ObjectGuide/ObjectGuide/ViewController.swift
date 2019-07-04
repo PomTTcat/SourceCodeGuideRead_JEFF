@@ -25,10 +25,15 @@ class ViewController: UIViewController {
 //        MapArrayDemo()
         
         // 嵌套对象使用
-        highLevelModelDemo()
+//        highLevelModelDemo()
         
         // transformOf使用
 //        transformOfDemo()
+        
+//        ImmutableMappableDemo()
+        
+        // 普通模型转字典
+        ObjectMapperModelToJSON()
     }
 }
 

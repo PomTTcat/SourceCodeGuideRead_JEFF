@@ -56,6 +56,8 @@ public extension Map {
 
 	fileprivate func currentValue(for key: String, nested: Bool? = nil, delimiter: String = ".") -> Any? {
 		let isNested = nested ?? key.contains(delimiter)
+        
+        // 这里直接走下标方法。
 		return self[key, nested: isNested, delimiter: delimiter].currentValue
 	}
 	

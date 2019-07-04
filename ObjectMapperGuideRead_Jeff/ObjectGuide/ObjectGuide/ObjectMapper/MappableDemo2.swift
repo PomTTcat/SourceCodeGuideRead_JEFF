@@ -20,12 +20,13 @@ class UserNew: Mappable {
 
 
 
-func ObjectMapperDemoFunc1() {
+func ObjectMapperModelToJSON() {
     let lilei = UserNew()
     lilei.username = "李雷"
     lilei.birthday = Date()
     
-    let json = lilei.toJSONString()!
+    // model -> dict
+    let json = lilei.toJSON()
     // "{\"birthday\":1562122283.4608941,\"username\":\"李雷\"}"
     print(json)
 }

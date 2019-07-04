@@ -109,7 +109,11 @@ public final class Mapper<N: BaseMappable> {
 			}
 		} else if let klass = N.self as? ImmutableMappable.Type { // Check if object is ImmutableMappable
 			do {
+                // 这里已经完成了初始化，为什么还要调用mapping?
 				if var object = try klass.init(map: map) as? N {
+                    
+                    // 这里虽然调用了mapping。但是">>>"中对于mappingType有做隔离。
+                    // 对于字典转模型，这个方法相当于没有发生操作。
 					object.mapping(map: map)
 					return object
 				}
