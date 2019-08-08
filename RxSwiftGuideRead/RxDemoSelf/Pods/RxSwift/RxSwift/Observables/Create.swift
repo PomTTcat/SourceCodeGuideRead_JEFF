@@ -23,6 +23,7 @@ extension ObservableType {
 }
 
 final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observer>, ObserverType {
+    // 在自定义类中使用typealias，增强可读性。
     typealias Element = Observer.Element 
     typealias Parent = AnonymousObservable<Element>
 
@@ -57,6 +58,8 @@ final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observ
     }
 
     func run(_ parent: Parent) -> Disposable {
+        // AnyObserver(self)，生成AnyObserver，把on()传递给该对象。
+        // Observable<E>.create一开始会接收一个observer，就是此处的AnyObserver。 onNext等事件就回调到了上面的on。
         return parent._subscribeHandler(AnyObserver(self))
     }
 }
@@ -64,6 +67,7 @@ final private class AnonymousObservableSink<Observer: ObserverType>: Sink<Observ
 final private class AnonymousObservable<Element>: Producer<Element> {
     typealias SubscribeHandler = (AnyObserver<Element>) -> Disposable
 
+    // 对Observable的订阅，具体处理操作的闭包。
     let _subscribeHandler: SubscribeHandler
 
     init(_ subscribeHandler: @escaping SubscribeHandler) {
@@ -72,6 +76,8 @@ final private class AnonymousObservable<Element>: Producer<Element> {
 
     override func run<Observer: ObserverType>(_ observer: Observer, cancel: Cancelable) -> (sink: Disposable, subscription: Disposable) where Observer.Element == Element {
         let sink = AnonymousObservableSink(observer: observer, cancel: cancel)
+        
+        // 此处subscription是序列闭包里返回的dp.
         let subscription = sink.run(self)
         return (sink: sink, subscription: subscription)
     }

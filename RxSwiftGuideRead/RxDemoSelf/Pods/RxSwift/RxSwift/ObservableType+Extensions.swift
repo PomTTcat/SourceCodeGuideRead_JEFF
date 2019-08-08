@@ -39,7 +39,7 @@ extension ObservableType {
     public func subscribe(onNext: ((Element) -> Void)? = nil, onError: ((Swift.Error) -> Void)? = nil, onCompleted: (() -> Void)? = nil, onDisposed: (() -> Void)? = nil)
         -> Disposable {
             let disposable: Disposable
-            print("xxxxxxxxxxxxxxxxxxxx")
+            
             // create Disposables
             if let disposed = onDisposed {
                 disposable = Disposables.create(with: disposed)

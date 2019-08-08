@@ -48,17 +48,25 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     /// The singleton instance of the current thread scheduler.
     public static let instance = CurrentThreadScheduler()
 
+    // {()->xx in ... return xx}() 这种格式相当于代码运行后返回了xx类型
     private static var isScheduleRequiredKey: pthread_key_t = { () -> pthread_key_t in
+        
+        // https://onevcat.com/2015/01/swift-pointer/
+        // key是pthread_key_t的指针
         let key = UnsafeMutablePointer<pthread_key_t>.allocate(capacity: 1)
         defer { key.deallocate() }
-                                                               
+        
+        // https://www.jianshu.com/p/d52c1ebf808a
+        // 函数成功返回0。 每pthread_key_create一次，返回的key值都不同。（递增1）
         guard pthread_key_create(key, nil) == 0 else {
             rxFatalError("isScheduleRequired key creation failed")
         }
 
+        // 是个数字，比如这一次是278. 以数字为key。
         return key.pointee
     }()
 
+    // 哨兵指针。
     private static var scheduleInProgressSentinel: UnsafeRawPointer = { () -> UnsafeRawPointer in
         return UnsafeRawPointer(UnsafeMutablePointer<Int>.allocate(capacity: 1))
     }()
@@ -73,14 +81,20 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
     }
 
     /// Gets a value that indicates whether the caller must call a `schedule` method.
+    /// 获取一个值，该值指示调用者是否必须调用`schedule`方法。
+    /// isScheduleRequired第一获取是true，第二次肯定是false(手动置fa)。仅仅用来标记，在这个线程是不是第一次操作。
     public static fileprivate(set) var isScheduleRequired: Bool {
         get {
-            return pthread_getspecific(CurrentThreadScheduler.isScheduleRequiredKey) == nil
+            // 第一次直接获取肯定是true. 因为还没有依据key，去存储值。
+            let b = pthread_getspecific(CurrentThreadScheduler.isScheduleRequiredKey) == nil
+            return b
         }
         set(isScheduleRequired) {
+            // true->nil false->哨兵
             if pthread_setspecific(CurrentThreadScheduler.isScheduleRequiredKey, isScheduleRequired ? nil : scheduleInProgressSentinel) != 0 {
                 rxFatalError("pthread_setspecific failed")
             }
+            // pthread_setspecific 函数成功返回0.
         }
     }
 
@@ -98,6 +112,7 @@ public class CurrentThreadScheduler : ImmediateSchedulerType {
         if CurrentThreadScheduler.isScheduleRequired {
             CurrentThreadScheduler.isScheduleRequired = false
 
+            // 这一步里面调用了run闭包。即产生序列（如create）的闭包发生了调用。 （这一般是个异步操作，比如网络请求，IO读取。）
             let disposable = action(state)
 
             defer {

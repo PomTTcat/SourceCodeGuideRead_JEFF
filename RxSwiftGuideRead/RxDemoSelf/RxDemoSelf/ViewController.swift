@@ -16,7 +16,7 @@
  RxSwift 的概念
  https://zhang759740844.github.io/2017/10/26/RxSwift%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5/
  https://zhang759740844.github.io/2017/11/14/RxSwift%E5%8E%9F%E7%90%86/
- https://zhang759740844.github.io/2017/11/03/RxCocoa%E5%BA%94%E7%94%A8/
+ https://zhang759740844.github.io/2017/11/03/RxCocoa%E5%BA%94%E7%94%A8/ // cocoa
  
  官方文档
  https://beeth0ven.github.io/RxSwift-Chinese-Documentation/content/more_demo/calculator.html
@@ -67,13 +67,16 @@ class ViewController: UIViewController {
             // 这里暂时是写死的。
             // 实际使用：这里可以是异步发起一个请求，然后请求回来之后发出一些信号。比如请求错误，请求返回json.
             
-            observer.onNext("1")
-            
-            observer.onNext("121")
-            
-            observer.onCompleted()
-            
-            observer.onNext("???")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                // your code here
+                observer.onNext("1")
+                
+                observer.onNext("121")
+                
+                observer.onCompleted()
+                
+                observer.onNext("???")
+            }
             
             return Disposables.create()
         }
@@ -461,7 +464,7 @@ class ViewController: UIViewController {
                 .subscribe { print($0.element ?? $0) }
                 .disposed(by: bag)
         }
-        
+        Void()
         // 最先触发就一直订阅哪一个。会自动取消订阅另一个。
         func ambDemo() {
             let left = PublishSubject<String>()

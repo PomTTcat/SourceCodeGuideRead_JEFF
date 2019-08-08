@@ -24,6 +24,7 @@ class Producer<Element> : Observable<Element> {
             return CurrentThreadScheduler.instance.schedule(()) { _ in
                 let disposer = SinkDisposer()
                 let sinkAndSubscription = self.run(observer, cancel: disposer)
+                //MARK:TODO 没明白。
                 disposer.setSinkAndSubscription(sink: sinkAndSubscription.sink, subscription: sinkAndSubscription.subscription)
 
                 return disposer
@@ -59,6 +60,7 @@ fileprivate final class SinkDisposer: Cancelable {
             rxFatalError("Sink and subscription were already set")
         }
 
+        // 如果previousState不为0的前提是 _state >= 2.
         if (previousState & DisposeState.disposed.rawValue) != 0 {
             sink.dispose()
             subscription.dispose()
