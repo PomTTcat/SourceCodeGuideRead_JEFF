@@ -67,6 +67,7 @@ public final class DisposeBag: DisposeBase {
         }
     }
 
+    // 清空数组，置位。返回数组。
     private func _dispose() -> [Disposable] {
         self._lock.lock(); defer { self._lock.unlock() }
 

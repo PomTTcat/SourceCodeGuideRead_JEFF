@@ -61,12 +61,9 @@ class ViewController: UIViewController {
         //        let observable5 = Observable<Any>.never()
         
         // 通过create创建一个可观察序列
-        
         let observable = Observable<String>.create { observer in
             
-            // 这里暂时是写死的。
             // 实际使用：这里可以是异步发起一个请求，然后请求回来之后发出一些信号。比如请求错误，请求返回json.
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 // your code here
                 observer.onNext("1")
@@ -82,15 +79,15 @@ class ViewController: UIViewController {
         }
         
         
-        let bag = DisposeBag()
-        
-        observable.subscribe(onNext: { (element) in
+        let ob = observable.subscribe(onNext: { (element) in
             print("Hi \(element)")
         }, onError: { (error) in
             print("error")
         }, onCompleted: {
             print("finish")
-        }).disposed(by: bag)
+        })
+        
+        ob.disposed(by: disposeBag)
     }
     
     func SubjectsDemo() {
