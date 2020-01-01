@@ -33,9 +33,9 @@
     
 #define RANDOMLY true
     
-    [ViewController memoryCacheBenchmarkJJ];
+//    [ViewController memoryCacheBenchmarkJJ];
     
-//    [ViewController diskCacheWriteSmallDataBenchmarkJJ];
+    [ViewController diskCacheWriteSmallDataBenchmarkJJ];
 //
 //    [ViewController diskCacheWriteLargeDataBenchmarkJJ];
 //
@@ -65,7 +65,7 @@
         [values addObject:value];
     }
     
-    for (int i = 0; i < count; i++) {
+    for (int i = 0; i < 1; i++) {
         [yy setObject:values[i] forKey:keys[i]];
     }
     

@@ -30,8 +30,8 @@ static inline dispatch_queue_t YYMemoryCacheGetReleaseQueue() {
     __unsafe_unretained _YYLinkedMapNode *_next; // retained by dic
     id _key;
     id _value;
-    NSUInteger _cost;
-    NSTimeInterval _time;
+    NSUInteger _cost;       // The cost with which to associate the key-value pair. Not understand
+    NSTimeInterval _time;   // 插入的时间
 }
 @end
 
@@ -119,6 +119,7 @@ static inline dispatch_queue_t YYMemoryCacheGetReleaseQueue() {
     _head = node;
 }
 
+// 去掉字典中对应的值，维护双向链表和cost，count。
 - (void)removeNode:(_YYLinkedMapNode *)node {
     CFDictionaryRemoveValue(_dic, (__bridge const void *)(node->_key));
     _totalCost -= node->_cost;
@@ -149,6 +150,7 @@ static inline dispatch_queue_t YYMemoryCacheGetReleaseQueue() {
     _totalCount = 0;
     _head = nil;
     _tail = nil;
+    // 直接创建新的dic，原来的释放。
     if (CFDictionaryGetCount(_dic) > 0) {
         CFMutableDictionaryRef holder = _dic;
         _dic = CFDictionaryCreateMutable(CFAllocatorGetDefault(), 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
@@ -208,8 +210,10 @@ static inline dispatch_queue_t YYMemoryCacheGetReleaseQueue() {
     pthread_mutex_unlock(&_lock);
     if (finish) return;
     
+    // 超costLimit. LRU算法，获取所有超cost的尾部对象。
     NSMutableArray *holder = [NSMutableArray new];
     while (!finish) {
+        // == 0 ，加锁成功 。每10ms
         if (pthread_mutex_trylock(&_lock) == 0) {
             if (_lru->_totalCost > costLimit) {
                 _YYLinkedMapNode *node = [_lru removeTailNode];
@@ -394,6 +398,7 @@ static inline dispatch_queue_t YYMemoryCacheGetReleaseQueue() {
     return contains;
 }
 
+// 访问key，会用LRU算法
 - (id)objectForKey:(id)key {
     if (!key) return nil;
     pthread_mutex_lock(&_lock);
@@ -434,12 +439,15 @@ static inline dispatch_queue_t YYMemoryCacheGetReleaseQueue() {
         node->_value = object;
         [_lru insertNodeAtHead:node];
     }
+    
+    // 开销超限定，异步✂️。
     if (_lru->_totalCost > _costLimit) {
         dispatch_async(_queue, ^{
             [self trimToCost:_costLimit];
         });
     }
     if (_lru->_totalCount > _countLimit) {
+        // 这个是同步的操作，保证比costLimit快。
         _YYLinkedMapNode *node = [_lru removeTailNode];
         if (_lru->_releaseAsynchronously) {
             dispatch_queue_t queue = _lru->_releaseOnMainThread ? dispatch_get_main_queue() : YYMemoryCacheGetReleaseQueue();
@@ -464,6 +472,7 @@ static inline dispatch_queue_t YYMemoryCacheGetReleaseQueue() {
         if (_lru->_releaseAsynchronously) {
             dispatch_queue_t queue = _lru->_releaseOnMainThread ? dispatch_get_main_queue() : YYMemoryCacheGetReleaseQueue();
             dispatch_async(queue, ^{
+                // 默认在子线程释放对象
                 [node class]; //hold and release in queue
             });
         } else if (_lru->_releaseOnMainThread && !pthread_main_np()) {
