@@ -47,7 +47,7 @@ static NSString *_YYNSStringMD5(NSString *string) {
 }
 
 /// weak reference for all instances
-static NSMapTable *_globalInstances;
+static NSMapTable *_globalInstances; // key 强引用。value 弱引用。
 static dispatch_semaphore_t _globalInstancesLock;
 
 static void _YYDiskCacheInitGlobal() {
@@ -62,6 +62,7 @@ static YYDiskCache *_YYDiskCacheGetGlobal(NSString *path) {
     if (path.length == 0) return nil;
     _YYDiskCacheInitGlobal();
     dispatch_semaphore_wait(_globalInstancesLock, DISPATCH_TIME_FOREVER);
+    // 意味着有多个cache。 一个path，一个cache。
     id cache = [_globalInstances objectForKey:path];
     dispatch_semaphore_signal(_globalInstancesLock);
     return cache;
@@ -107,6 +108,7 @@ static void _YYDiskCacheSetGlobal(YYDiskCache *cache) {
     });
 }
 
+// 这里的Cost就是文件的Size
 - (void)_trimToCost:(NSUInteger)costLimit {
     if (costLimit >= INT_MAX) return;
     [_kv removeItemsToFitSize:(int)costLimit];
@@ -130,12 +132,17 @@ static void _YYDiskCacheSetGlobal(YYDiskCache *cache) {
     [_kv removeItemsEarlierThanTime:(int)age];
 }
 
+// targetFreeDiskSpace ： 目标剩余空间
 - (void)_trimToFreeDiskSpace:(NSUInteger)targetFreeDiskSpace {
     if (targetFreeDiskSpace == 0) return;
+    
     int64_t totalBytes = [_kv getItemsSize];
     if (totalBytes <= 0) return;
+    
+    // NSHomeDirectory 剩余空间。 暂时不清楚这个剩余空间是不是整个系统的。 这个到时候可以测
     int64_t diskFreeBytes = _YYDiskSpaceFree();
     if (diskFreeBytes < 0) return;
+    
     int64_t needTrimBytes = targetFreeDiskSpace - diskFreeBytes;
     if (needTrimBytes <= 0) return;
     int64_t costLimit = totalBytes - needTrimBytes;
@@ -145,6 +152,7 @@ static void _YYDiskCacheSetGlobal(YYDiskCache *cache) {
 
 - (NSString *)_filenameForKey:(NSString *)key {
     NSString *filename = nil;
+    // 自定义取名字方法。如果没有实现，则直接md5 key
     if (_customFileNameBlock) filename = _customFileNameBlock(key);
     if (!filename) filename = _YYNSStringMD5(key);
     return filename;
@@ -166,7 +174,7 @@ static void _YYDiskCacheSetGlobal(YYDiskCache *cache) {
     @throw [NSException exceptionWithName:@"YYDiskCache init error" reason:@"YYDiskCache must be initialized with a path. Use 'initWithPath:' or 'initWithPath:inlineThreshold:' instead." userInfo:nil];
     return [self initWithPath:@"" inlineThreshold:0];
 }
-
+// 默认临界值为20k
 - (instancetype)initWithPath:(NSString *)path {
     return [self initWithPath:path inlineThreshold:1024 * 20]; // 20KB
 }
@@ -180,6 +188,8 @@ static void _YYDiskCacheSetGlobal(YYDiskCache *cache) {
     if (globalCache) return globalCache;
     
     YYKVStorageType type;
+    // 大于临界值的，存储在file中，小于临界值的存储于SQLite中。
+    // 作者规定，0的话，所有文件分开存储。 max则都存在SQLite中。
     if (threshold == 0) {
         type = YYKVStorageTypeFile;
     } else if (threshold == NSUIntegerMax) {
@@ -268,12 +278,17 @@ static void _YYDiskCacheSetGlobal(YYDiskCache *cache) {
         return;
     }
     
+    // 先获取，obj的关联对象。（你可以给这个对象，关联一些NSData形式的信息。）
     NSData *extendedData = [YYDiskCache getExtendedDataFromObject:object];
     NSData *value = nil;
+    
+    // 如果你要存储的对象没有遵循NSCoding协议，你又想归档。
+    // 自定义归档操作。把对象转化成NSData。
     if (_customArchiveBlock) {
         value = _customArchiveBlock(object);
     } else {
         @try {
+            // NSKeyedArchiver 只能序列化遵循NSCoding协议的对象。
             value = [NSKeyedArchiver archivedDataWithRootObject:object];
         }
         @catch (NSException *exception) {
@@ -282,6 +297,7 @@ static void _YYDiskCacheSetGlobal(YYDiskCache *cache) {
     }
     if (!value) return;
     NSString *filename = nil;
+    // 默认都是mix
     if (_kv.type != YYKVStorageTypeSQLite) {
         if (value.length > _inlineThreshold) {
             filename = [self _filenameForKey:key];
@@ -333,6 +349,7 @@ static void _YYDiskCacheSetGlobal(YYDiskCache *cache) {
     });
 }
 
+// Progress 不过是数量上的进度
 - (void)removeAllObjectsWithProgressBlock:(void(^)(int removedCount, int totalCount))progress
                                  endBlock:(void(^)(BOOL error))end {
     __weak typeof(self) _self = self;

@@ -44,13 +44,13 @@ static NSString *const kTrashDirectoryName = @"trash";
  
  SQL:
  create table if not exists manifest (
-    key                 text,
-    filename            text,
+    key                 text, // 传值获取
+    filename            text, // 传值获取
     size                integer,
     inline_data         blob,
     modification_time   integer,
     last_access_time    integer,
-    extended_data       blob,
+    extended_data       blob, // (binary large object) 二进制大对象。可以是一张图片或一个声音文件。
     primary key(key)
  ); 
  create index if not exists last_access_time_idx on manifest(last_access_time);
@@ -696,6 +696,8 @@ static UIApplication *_YYSharedApplication() {
     _dbPath = [path stringByAppendingPathComponent:kDBFileName];
     _errorLogsEnabled = YES;
     NSError *error = nil;
+    
+    // withIntermediateDirectories:YES。NO的话，前提是文件不存在。YES的话，文件存在也可以
     if (![[NSFileManager defaultManager] createDirectoryAtPath:path
                                    withIntermediateDirectories:YES
                                                     attributes:nil
@@ -712,6 +714,7 @@ static UIApplication *_YYSharedApplication() {
         return nil;
     }
     
+    // 保证db打开成功
     if (![self _dbOpen] || ![self _dbInitialize]) {
         // db file may broken...
         [self _dbClose];
@@ -749,9 +752,11 @@ static UIApplication *_YYSharedApplication() {
     }
     
     if (filename.length) {
+        // 直接把NSData写入指定路径。 写入成功，继续...
         if (![self _fileWriteWithName:filename data:value]) {
             return NO;
         }
+        // 存储成功，return yes
         if (![self _dbSaveWithKey:key value:value fileName:filename extendedData:extendedData]) {
             [self _fileDeleteWithName:filename];
             return NO;
@@ -856,10 +861,12 @@ static UIApplication *_YYSharedApplication() {
     return NO;
 }
 
+// LRU算法删除超过size的部分。
 - (BOOL)removeItemsToFitSize:(int)maxSize {
     if (maxSize == INT_MAX) return YES;
     if (maxSize <= 0) return [self removeAllItems];
     
+    // 所有item size 相加
     int total = [self _dbGetTotalItemSize];
     if (total < 0) return NO;
     if (total <= maxSize) return YES;
@@ -868,6 +875,7 @@ static UIApplication *_YYSharedApplication() {
     BOOL suc = NO;
     do {
         int perCount = 16;
+        // 获取最早访问的16个item。开始删除最早的，次早的...一轮不够，再来一轮。
         items = [self _dbGetItemSizeInfoOrderByTimeAscWithLimit:perCount];
         for (YYKVStorageItem *item in items) {
             if (total > maxSize) {
@@ -958,10 +966,14 @@ static UIApplication *_YYSharedApplication() {
 
 - (YYKVStorageItem *)getItemForKey:(NSString *)key {
     if (key.length == 0) return nil;
+    
+    // excludeInlineData:NO 不排除内联数据。
     YYKVStorageItem *item = [self _dbGetItemWithKey:key excludeInlineData:NO];
     if (item) {
         [self _dbUpdateAccessTimeWithKey:key];
+        // 如果有文件名，则说明是另外的file存储
         if (item.filename) {
+            // 从file获取value
             item.value = [self _fileReadWithName:item.filename];
             if (!item.value) {
                 [self _dbDeleteItemWithKey:key];
@@ -972,6 +984,7 @@ static UIApplication *_YYSharedApplication() {
     return item;
 }
 
+// 这是info，不包含value
 - (YYKVStorageItem *)getItemInfoForKey:(NSString *)key {
     if (key.length == 0) return nil;
     YYKVStorageItem *item = [self _dbGetItemWithKey:key excludeInlineData:YES];

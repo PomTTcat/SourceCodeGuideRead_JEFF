@@ -23,9 +23,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    //        [BenchmarkJJ BenchmarkJJ];
-    //    });
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [Benchmark benchmark];
+        });
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -35,13 +35,14 @@
     
 //    [ViewController memoryCacheBenchmarkJJ];
     
-    [ViewController diskCacheWriteSmallDataBenchmarkJJ];
-//
+//    [ViewController diskCacheWriteSmallDataBenchmarkJJ];
+
 //    [ViewController diskCacheWriteLargeDataBenchmarkJJ];
 //
 //    [ViewController diskCacheReadSmallDataBenchmarkJJ:RANDOMLY];
 //
 //    [ViewController diskCacheReadLargeDataBenchmarkJJ:RANDOMLY];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,7 +55,7 @@
     
     NSMutableArray *keys = [NSMutableArray new];
     NSMutableArray *values = [NSMutableArray new];
-    int count = 200000;
+    int count = 1;
     for (int i = 0; i < count; i++) {
         NSObject *key;
         key = @(i); // avoid string compare
@@ -65,7 +66,7 @@
         [values addObject:value];
     }
     
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < count; i++) {
         [yy setObject:values[i] forKey:keys[i]];
     }
     
@@ -80,7 +81,7 @@
     YYKVStorage *yykvSQLite = [[YYKVStorage alloc] initWithPath:[basePath stringByAppendingPathComponent:@"yykvSQLite"] type:YYKVStorageTypeSQLite];
     YYDiskCache *yy = [[YYDiskCache alloc] initWithPath:[basePath stringByAppendingPathComponent:@"yy"]];
     
-    int count = 1000;
+    int count = 1;
     NSMutableArray *keys = [NSMutableArray new];
     NSMutableArray *values = [NSMutableArray new];
     for (int i = 0; i < count; i++) {
@@ -89,7 +90,6 @@
         [keys addObject:key];
         [values addObject:value];
     }
-    
     
     
     for (int i = 0; i < count; i++) {
@@ -117,7 +117,7 @@
     yy.customUnarchiveBlock = ^(NSData *object) {return object;};
     
     
-    int count = 1000;
+    int count = 1;
     NSMutableArray *keys = [NSMutableArray new];
     for (int i = 0; i < count; i++) {
         NSString *key = @(i).description;
@@ -152,7 +152,7 @@
     YYDiskCache *yy = [[YYDiskCache alloc] initWithPath:[basePath stringByAppendingPathComponent:@"yy"]];
     PINDiskCache *pin = [[PINDiskCache alloc] initWithName:@"pin" rootPath:[basePath stringByAppendingPathComponent:@"pin"]];
     
-    int count = 1000;
+    int count = 1;
     NSMutableArray *keys = [NSMutableArray new];
     for (int i = 0; i < count; i++) {
         NSString *key = @(i).description;
@@ -197,7 +197,7 @@
     yy.customUnarchiveBlock = ^(NSData *object) {return object;};
     PINDiskCache *pin = [[PINDiskCache alloc] initWithName:@"pin" rootPath:[basePath stringByAppendingPathComponent:@"pin"]];
     
-    int count = 1000;
+    int count = 1;
     NSMutableArray *keys = [NSMutableArray new];
     for (int i = 0; i < count; i++) {
         NSString *key = @(i).description;
